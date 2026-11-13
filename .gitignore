@@ -1,0 +1,17 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.git/node_modules/
+.env
+.env.*
+!.env.example
+.git/
+*.db
+*.sqlite
+*.sqlite3
+uploads/
+artifacts/
+scratch/edge_temp_profile/ scratch/edge_temp_profile/
+/scratch/edge_temp_profile/
+scratch/

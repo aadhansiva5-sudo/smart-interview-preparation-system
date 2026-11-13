@@ -1,0 +1,287 @@
+﻿/**
+ * i18n.js — PrepSmart Translation System
+ * Uses data-i18n attributes for efficient DOM translation.
+ * Falls back to English for any missing key.
+ */
+window.I18N = (function () {
+  const translations = {
+    en: {
+      nav_dashboard: 'Dashboard', nav_aptitude: 'Aptitude Practice', nav_coding: 'Coding Practice',
+      nav_technical: 'Technical Interview', nav_mock: 'AI Mock Interview', nav_resume: 'Resume Analyzer',
+      nav_progress: 'My Progress', nav_admin: 'Admin Panel', nav_login: 'Log In', nav_register: 'Get Started Free',
+      login_title: 'Welcome Back', login_subtitle: 'Sign in to continue your preparation',
+      login_email: 'Email Address', login_password: 'Password', login_btn: 'Sign In',
+      register_title: 'Create Your Account', register_name: 'Full Name',
+      register_email: 'Email Address', register_password: 'Password', register_btn: 'Create Account',
+      otp_title: 'Verify Your Email', otp_subtitle: 'Enter the 4-digit code sent to',
+      otp_verify: 'Verify OTP', otp_resend: 'Resend OTP',
+      dash_title: 'Your Interview Dashboard', dash_readiness: 'Readiness Score',
+      dash_hours: 'Practice Hours', dash_topics: 'Topics Mastered', dash_interviews: 'Interviews Done',
+      settings_title: 'System Settings & Preferences',
+      settings_profile: 'Profile', settings_appearance: 'Appearance', settings_notifications: 'Notifications',
+      settings_security: 'Account & Security', settings_privacy: 'Privacy',
+      settings_language: 'Language', settings_preferences: 'Preferences',
+      settings_accessibility: 'Accessibility', settings_help: 'Help & Support', settings_about: 'About',
+      profile_section: 'Profile Information', profile_name: 'Full Name', profile_email: 'Email Address',
+      profile_role: 'Target Job Role', profile_level: 'Experience Level', profile_save: 'Save Profile Changes',
+      appearance_title: 'Appearance & Visual Theme', appearance_dark: 'Dark Mode (Recommended)', appearance_light: 'Light Mode',
+      lang_title: 'Language & Localization', lang_subtitle: 'Select your preferred system display language',
+      notif_title: 'Notification Preferences', notif_practice: 'Practice Reminders',
+      notif_interviews: 'Interview Reminders', notif_progress: 'Progress Updates', notif_email: 'Email Notifications',
+      btn_save: 'Save', btn_cancel: 'Cancel', btn_logout: 'Log Out',
+      btn_upload_photo: 'Upload Photo', btn_remove_photo: 'Remove Photo', btn_save_photo: 'Save Photo',
+      photo_hint: 'JPG, PNG, WebP or GIF. Max 5 MB.',
+      avatar_title: 'Profile Picture & Avatar', avatar_subtitle: 'Choose your avatar badge theme',
+      toast_saved: 'Settings saved!', toast_error: 'Something went wrong.',
+      toast_photo_saved: 'Profile photo updated!', toast_photo_removed: 'Profile photo removed.',
+      toast_lang_changed: 'Language changed!', toast_theme_changed: 'Theme updated!',
+      toast_accent_changed: 'Accent color updated!',
+    },
+    ta: {
+      nav_dashboard: 'டாஷ்போர்டு', nav_aptitude: 'திறன் பயிற்சி', nav_coding: 'கோடிங் பயிற்சி',
+      nav_technical: 'தொழில்நுட்ப நேர்காணல்', nav_mock: 'AI மாக் நேர்காணல்', nav_resume: 'ரெஸ்யூமே பகுப்பாய்வி',
+      nav_progress: 'என் முன்னேற்றம்', nav_admin: 'நிர்வாக பலகை', nav_login: 'உள்நுழைய', nav_register: 'இலவசமாக தொடங்கவும்',
+      login_title: 'மீண்டும் வரவேற்கிறோம்', login_subtitle: 'தயாரிப்பை தொடர உள்நுழைக',
+      login_email: 'மின்னஞ்சல் முகவரி', login_password: 'கடவுச்சொல்', login_btn: 'உள்நுழைக',
+      register_title: 'உங்கள் கணக்கை உருவாக்கவும்', register_name: 'முழு பெயர்', register_btn: 'கணக்கை உருவாக்கவும்',
+      otp_verify: 'OTP சரிபார்க்கவும்', otp_resend: 'OTP மீண்டும் அனுப்பவும்',
+      dash_title: 'உங்கள் நேர்காணல் டாஷ்போர்டு',
+      settings_title: 'அமைப்புகள் மற்றும் விருப்பங்கள்',
+      settings_profile: 'சுயவிவரம்', settings_appearance: 'தோற்றம்', settings_notifications: 'அறிவிப்புகள்',
+      settings_security: 'கணக்கு & பாதுகாப்பு', settings_privacy: 'தனியுரிமை',
+      settings_language: 'மொழி', settings_preferences: 'விருப்பங்கள்',
+      settings_accessibility: 'அணுகலுரிமை', settings_help: 'உதவி & ஆதரவு', settings_about: 'பற்றி',
+      profile_section: 'சுயவிவர தகவல்', profile_name: 'முழு பெயர்', profile_email: 'மின்னஞ்சல் முகவரி',
+      profile_role: 'இலக்கு வேலை பாத்திரம்', profile_level: 'அனுபவ நிலை', profile_save: 'சுயவிவர மாற்றங்களை சேமிக்கவும்',
+      lang_title: 'மொழி & உள்ளூர்மயமாக்கல்', lang_subtitle: 'விருப்பமான மொழியைத் தேர்வுசெய்க',
+      btn_save: 'சேமி', btn_cancel: 'ரத்து', btn_logout: 'வெளியேறு',
+      btn_upload_photo: 'புகைப்படம் பதிவேற்று', btn_remove_photo: 'புகைப்படம் நீக்கு', btn_save_photo: 'புகைப்படம் சேமி',
+      photo_hint: 'JPG, PNG, WebP அல்லது GIF. அதிகபட்சம் 5 MB.',
+      avatar_title: 'சுயவிவர படம் & அவதார்', avatar_subtitle: 'உங்கள் அவதார் தீம் தேர்ந்தெடுக்கவும்',
+      toast_saved: 'அமைப்புகள் சேமிக்கப்பட்டன!', toast_error: 'ஏதோ தவறாகிவிட்டது.',
+      toast_photo_saved: 'புகைப்படம் புதுப்பிக்கப்பட்டது!', toast_photo_removed: 'புகைப்படம் அகற்றப்பட்டது.',
+      toast_lang_changed: 'மொழி மாற்றப்பட்டது!', toast_theme_changed: 'தீம் புதுப்பிக்கப்பட்டது!',
+      notif_title: 'அறிவிப்பு விருப்பங்கள்', notif_practice: 'பயிற்சி நினைவூட்டல்கள்',
+      notif_interviews: 'நேர்காணல் நினைவூட்டல்கள்', notif_progress: 'முன்னேற்ற புதுப்பிப்புகள்', notif_email: 'மின்னஞ்சல் அறிவிப்புகள்',
+    },
+    hi: {
+      nav_dashboard: 'डैशबोर्ड', nav_aptitude: 'योग्यता अभ्यास', nav_coding: 'कोडिंग अभ्यास',
+      nav_technical: 'तकनीकी साक्षात्कार', nav_mock: 'AI मॉक इंटरव्यू', nav_resume: 'रेज़्यूमे विश्लेषक',
+      nav_progress: 'मेरी प्रगति', nav_admin: 'एडमिन पैनल', nav_login: 'लॉग इन', nav_register: 'मुफ़्त में शुरू करें',
+      login_title: 'वापस स्वागत है', login_subtitle: 'तैयारी जारी रखने के लिए साइन इन करें',
+      login_email: 'ईमेल पता', login_password: 'पासवर्ड', login_btn: 'साइन इन',
+      register_title: 'अपना खाता बनाएं', register_name: 'पूरा नाम', register_btn: 'खाता बनाएं',
+      otp_verify: 'OTP सत्यापित करें', otp_resend: 'OTP पुनः भेजें',
+      dash_title: 'आपका इंटरव्यू डैशबोर्ड',
+      settings_title: 'सिस्टम सेटिंग्स और प्राथमिकताएं',
+      settings_profile: 'प्रोफ़ाइल', settings_appearance: 'दिखावट', settings_notifications: 'सूचनाएं',
+      settings_security: 'खाता और सुरक्षा', settings_privacy: 'गोपनीयता',
+      settings_language: 'भाषा', settings_preferences: 'प्राथमिकताएं',
+      settings_accessibility: 'अभिगम्यता', settings_help: 'सहायता और समर्थन', settings_about: 'के बारे में',
+      profile_section: 'प्रोफ़ाइल जानकारी', profile_name: 'पूरा नाम', profile_email: 'ईमेल पता',
+      profile_role: 'लक्षित नौकरी भूमिका', profile_level: 'अनुभव स्तर', profile_save: 'प्रोफ़ाइल परिवर्तन सहेजें',
+      lang_title: 'भाषा और स्थानीयकरण', lang_subtitle: 'अपनी पसंदीदा भाषा चुनें',
+      btn_save: 'सहेजें', btn_cancel: 'रद्द करें', btn_logout: 'लॉग आउट',
+      btn_upload_photo: 'फ़ोटो अपलोड करें', btn_remove_photo: 'फ़ोटो हटाएं', btn_save_photo: 'फ़ोटो सहेजें',
+      photo_hint: 'JPG, PNG, WebP या GIF. अधिकतम 5 MB.',
+      avatar_title: 'प्रोफ़ाइल चित्र और अवतार', avatar_subtitle: 'अपनी अवतार थीम चुनें',
+      toast_saved: 'सेटिंग्स सहेजी गईं!', toast_error: 'कुछ गलत हो गया।',
+      toast_photo_saved: 'फ़ोटो अपडेट हुई!', toast_photo_removed: 'फ़ोटो हटा दी गई।',
+      toast_lang_changed: 'भाषा बदल गई!', toast_theme_changed: 'थीम अपडेट हुई!',
+      notif_title: 'अधिसूचना प्राथमिकताएं', notif_practice: 'अभ्यास अनुस्मारक',
+      notif_interviews: 'इंटरव्यू अनुस्मारक', notif_progress: 'प्रगति अपडेट', notif_email: 'ईमेल सूचनाएं',
+    },
+    te: {
+      nav_dashboard: 'డాష్‌బోర్డ్', nav_aptitude: 'యోగ్యత', nav_coding: 'కోడింగ్',
+      nav_technical: 'సాంకేతిక', nav_mock: 'మాక్ ఇంటర్వ్యూ', nav_resume: 'రెస్యూమె',
+      nav_progress: 'పురోగతి', nav_login: 'లాగిన్', nav_register: 'ఉచితంగా ప్రారంభించండి',
+      login_title: 'తిరిగి స్వాగతం', login_email: 'ఇమెయిల్ చిరునామా', login_password: 'పాస్‌వర్డ్', login_btn: 'సైన్ ఇన్',
+      register_title: 'మీ ఖాతాను సృష్టించండి', register_name: 'పూర్తి పేరు', register_btn: 'ఖాతా సృష్టించు',
+      otp_verify: 'OTP ధృవీకరించు', otp_resend: 'OTP మళ్ళీ పంపు',
+      settings_profile: 'ప్రొఫైల్', settings_language: 'భాష', settings_appearance: 'రూపం',
+      profile_save: 'ప్రొఫైల్ మార్పులు సేవ్ చేయండి',
+      btn_save: 'సేవ్', btn_cancel: 'రద్దు', btn_logout: 'లాగ్ అవుట్',
+      btn_upload_photo: 'ఫోటో అప్‌లోడ్', btn_remove_photo: 'ఫోటో తొలగించు', btn_save_photo: 'ఫోటో సేవ్',
+      photo_hint: 'JPG, PNG, WebP లేదా GIF. గరిష్టంగా 5 MB.',
+      toast_saved: 'సెట్టింగ్‌లు సేవ్ అయ్యాయి!', toast_lang_changed: 'భాష మార్చబడింది!',
+    },
+    ml: {
+      nav_dashboard: 'ഡാഷ്ബോർഡ്', nav_aptitude: 'അഭിരുചി', nav_coding: 'കോഡിംഗ്',
+      nav_technical: 'സാങ്കേതിക', nav_mock: 'മോക്ക് ഇന്റർവ്യൂ', nav_resume: 'റെസ്യൂമെ',
+      nav_progress: 'പുരോഗതി', nav_login: 'ലോഗിൻ', nav_register: 'സൗജന്യമായി ആരംഭിക്കുക',
+      login_title: 'തിരിച്ചു സ്വാഗതം', login_email: 'ഇമെയിൽ വിലാസം', login_password: 'പാസ്‌വേഡ്', login_btn: 'സൈൻ ഇൻ',
+      register_title: 'നിങ്ങളുടെ അക്കൗണ്ട് ഉണ്ടാക്കുക', register_name: 'മുഴുവൻ പേര്', register_btn: 'അക്കൗണ്ട് ഉണ്ടാക്കുക',
+      otp_verify: 'OTP സ്ഥിരീകരിക്കുക', otp_resend: 'OTP വീണ്ടും അയക്കുക',
+      settings_profile: 'പ്രൊഫൈൽ', settings_language: 'ഭാഷ', settings_appearance: 'രൂപം',
+      profile_save: 'പ്രൊഫൈൽ മാറ്റങ്ങൾ സേവ് ചെയ്യുക',
+      btn_save: 'സേവ്', btn_cancel: 'റദ്ദ്', btn_logout: 'ലോഗ് ഔട്ട്',
+      btn_upload_photo: 'ഫോട്ടോ അപ്‌ലോഡ്', btn_remove_photo: 'ഫോട്ടോ നീക്കുക', btn_save_photo: 'ഫോട്ടോ സേവ്',
+      photo_hint: 'JPG, PNG, WebP അല്ലെങ്കിൽ GIF. പരമാവധി 5 MB.',
+      toast_saved: 'ക്രമീകരണങ്ങൾ സേവ് ചെയ്തു!', toast_lang_changed: 'ഭാഷ മാറ്റി!',
+    },
+    kn: {
+      nav_dashboard: 'ಡ್ಯಾಶ್‌ಬೋರ್ಡ್', nav_aptitude: 'ಅಭಿರುಚಿ', nav_coding: 'ಕೋಡಿಂಗ್',
+      nav_technical: 'ತಾಂತ್ರಿಕ', nav_mock: 'ಮಾಕ್ ಸಂದರ್ಶನ', nav_resume: 'ರೆಸ್ಯೂಮೆ',
+      nav_progress: 'ಪ್ರಗತಿ', nav_login: 'ಲಾಗಿನ್', nav_register: 'ಉಚಿತವಾಗಿ ಪ್ರಾರಂಭಿಸಿ',
+      login_title: 'ಮರಳಿ ಸ್ವಾಗತ', login_email: 'ಇಮೇಲ್ ವಿಳಾಸ', login_password: 'ಪಾಸ್‌ವರ್ಡ್', login_btn: 'ಸೈನ್ ಇನ್',
+      register_title: 'ನಿಮ್ಮ ಖಾತೆ ರಚಿಸಿ', register_name: 'ಪೂರ್ಣ ಹೆಸರು', register_btn: 'ಖಾತೆ ರಚಿಸಿ',
+      settings_profile: 'ಪ್ರೊಫೈಲ್', settings_language: 'ಭಾಷೆ',
+      profile_save: 'ಪ್ರೊಫೈಲ್ ಬದಲಾವಣೆಗಳನ್ನು ಉಳಿಸಿ',
+      btn_save: 'ಉಳಿಸಿ', btn_cancel: 'ರದ್ದುಮಾಡಿ', btn_logout: 'ಲಾಗ್ ಔಟ್',
+      btn_upload_photo: 'ಫೋಟೋ ಅಪ್‌ಲೋಡ್', btn_remove_photo: 'ಫೋಟೋ ತೆಗೆ', btn_save_photo: 'ಫೋಟೋ ಉಳಿಸಿ',
+      toast_saved: 'ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಉಳಿಸಲಾಗಿದೆ!', toast_lang_changed: 'ಭಾಷೆ ಬದಲಾಯಿತು!',
+    },
+    bn: {
+      nav_dashboard: 'ড্যাশবোর্ড', nav_aptitude: 'যোগ্যতা', nav_coding: 'কোডিং',
+      nav_technical: 'প্রযুক্তিগত', nav_mock: 'মক ইন্টারভিউ', nav_resume: 'রেজ্যুমে',
+      nav_progress: 'অগ্রগতি', nav_login: 'লগ ইন', nav_register: 'বিনামূল্যে শুরু করুন',
+      login_title: 'স্বাগতম', login_email: 'ইমেইল ঠিকানা', login_password: 'পাসওয়ার্ড', login_btn: 'সাইন ইন',
+      register_title: 'আপনার অ্যাকাউন্ট তৈরি করুন', register_name: 'পুরো নাম', register_btn: 'অ্যাকাউন্ট তৈরি করুন',
+      settings_profile: 'প্রোফাইল', settings_language: 'ভাষা',
+      profile_save: 'প্রোফাইল পরিবর্তন সংরক্ষণ করুন',
+      btn_save: 'সংরক্ষণ', btn_cancel: 'বাতিল', btn_logout: 'লগ আউট',
+      btn_upload_photo: 'ছবি আপলোড', btn_remove_photo: 'ছবি সরান', btn_save_photo: 'ছবি সংরক্ষণ',
+      toast_saved: 'সেটিংস সংরক্ষিত!', toast_lang_changed: 'ভাষা পরিবর্তিত!',
+    },
+    mr: {
+      nav_dashboard: 'डॅशबोर्ड', nav_aptitude: 'बुद्धिमत्ता', nav_coding: 'कोडिंग',
+      nav_technical: 'तांत्रिक', nav_mock: 'मॉक मुलाखत', nav_resume: 'रेझ्युमे',
+      nav_progress: 'प्रगती', nav_login: 'लॉग इन', nav_register: 'मोफत सुरू करा',
+      login_title: 'पुन्हा स्वागत आहे', login_email: 'ईमेल पत्ता', login_password: 'पासवर्ड', login_btn: 'साइन इन',
+      register_title: 'आपले खाते तयार करा', register_name: 'पूर्ण नाव', register_btn: 'खाते तयार करा',
+      settings_profile: 'प्रोफाइल', settings_language: 'भाषा',
+      profile_save: 'प्रोफाइल बदल जतन करा',
+      btn_save: 'जतन करा', btn_cancel: 'रद्द करा', btn_logout: 'लॉग आउट',
+      btn_upload_photo: 'फोटो अपलोड', btn_remove_photo: 'फोटो काढा', btn_save_photo: 'फोटो जतन',
+      toast_saved: 'सेटिंग्ज जतन केल्या!', toast_lang_changed: 'भाषा बदलली!',
+    },
+    es: {
+      nav_dashboard: 'Panel', nav_aptitude: 'Aptitud', nav_coding: 'Programación',
+      nav_technical: 'Técnico', nav_mock: 'Entrevista Simulada', nav_resume: 'Currículum',
+      nav_progress: 'Progreso', nav_admin: 'Admin', nav_login: 'Iniciar Sesión', nav_register: 'Comenzar Gratis',
+      login_title: 'Bienvenido de Nuevo', login_subtitle: 'Inicia sesión para continuar',
+      login_email: 'Correo Electrónico', login_password: 'Contraseña', login_btn: 'Iniciar Sesión',
+      register_title: 'Crea tu Cuenta', register_name: 'Nombre Completo', register_btn: 'Crear Cuenta',
+      otp_verify: 'Verificar OTP', otp_resend: 'Reenviar OTP',
+      settings_profile: 'Perfil', settings_appearance: 'Apariencia', settings_notifications: 'Notificaciones',
+      settings_language: 'Idioma', settings_preferences: 'Preferencias',
+      profile_save: 'Guardar Cambios de Perfil',
+      lang_title: 'Idioma y Localización', lang_subtitle: 'Selecciona tu idioma preferido',
+      btn_save: 'Guardar', btn_cancel: 'Cancelar', btn_logout: 'Cerrar Sesión',
+      btn_upload_photo: 'Subir Foto', btn_remove_photo: 'Eliminar Foto', btn_save_photo: 'Guardar Foto',
+      photo_hint: 'JPG, PNG, WebP o GIF. Máx 5 MB.',
+      toast_saved: '¡Configuración guardada!', toast_lang_changed: '¡Idioma cambiado!',
+    },
+    fr: {
+      nav_dashboard: 'Tableau de Bord', nav_aptitude: 'Aptitude', nav_coding: 'Programmation',
+      nav_technical: 'Technique', nav_mock: 'Entretien Simulé', nav_resume: 'CV',
+      nav_progress: 'Progrès', nav_admin: 'Admin', nav_login: 'Connexion', nav_register: 'Commencer Gratuitement',
+      login_title: 'Content de vous revoir', login_email: 'Adresse e-mail', login_password: 'Mot de passe', login_btn: 'Se connecter',
+      register_title: 'Créez votre compte', register_name: 'Nom complet', register_btn: 'Créer un compte',
+      otp_verify: 'Vérifier OTP', otp_resend: 'Renvoyer OTP',
+      settings_profile: 'Profil', settings_language: 'Langue',
+      profile_save: 'Enregistrer les modifications',
+      btn_save: 'Sauvegarder', btn_cancel: 'Annuler', btn_logout: 'Déconnexion',
+      btn_upload_photo: 'Télécharger Photo', btn_remove_photo: 'Supprimer Photo', btn_save_photo: 'Sauvegarder Photo',
+      toast_saved: 'Paramètres sauvegardés!', toast_lang_changed: 'Langue changée!',
+    },
+    de: {
+      nav_dashboard: 'Dashboard', nav_aptitude: 'Eignungstest', nav_coding: 'Programmierung',
+      nav_technical: 'Technisch', nav_mock: 'Mock-Interview', nav_resume: 'Lebenslauf',
+      nav_progress: 'Fortschritt', nav_admin: 'Admin', nav_login: 'Anmelden', nav_register: 'Kostenlos Starten',
+      login_title: 'Willkommen Zurück', login_email: 'E-Mail-Adresse', login_password: 'Passwort', login_btn: 'Anmelden',
+      register_title: 'Konto Erstellen', register_name: 'Vollständiger Name', register_btn: 'Konto Erstellen',
+      otp_verify: 'OTP Verifizieren', otp_resend: 'OTP Erneut Senden',
+      settings_profile: 'Profil', settings_language: 'Sprache',
+      profile_save: 'Profileänderungen Speichern',
+      btn_save: 'Speichern', btn_cancel: 'Abbrechen', btn_logout: 'Abmelden',
+      btn_upload_photo: 'Foto Hochladen', btn_remove_photo: 'Foto Entfernen', btn_save_photo: 'Foto Speichern',
+      toast_saved: 'Einstellungen gespeichert!', toast_lang_changed: 'Sprache geändert!',
+    },
+    ja: {
+      nav_dashboard: 'ダッシュボード', nav_aptitude: '適性テスト', nav_coding: 'コーディング',
+      nav_technical: '技術面接', nav_mock: 'AI模擬面接', nav_resume: '履歴書',
+      nav_progress: '進捗', nav_admin: '管理者', nav_login: 'ログイン', nav_register: '無料で始める',
+      login_title: 'おかえりなさい', login_email: 'メールアドレス', login_password: 'パスワード', login_btn: 'サインイン',
+      register_title: 'アカウントを作成', register_name: '氏名', register_btn: 'アカウントを作成',
+      otp_verify: 'OTP確認', otp_resend: 'OTP再送',
+      settings_profile: 'プロフィール', settings_language: '言語',
+      profile_save: 'プロフィールを保存',
+      btn_save: '保存', btn_cancel: 'キャンセル', btn_logout: 'ログアウト',
+      btn_upload_photo: '写真をアップロード', btn_remove_photo: '写真を削除', btn_save_photo: '写真を保存',
+      toast_saved: '設定が保存されました！', toast_lang_changed: '言語が変更されました！',
+    },
+    zh: {
+      nav_dashboard: '仪表板', nav_aptitude: '适性测试', nav_coding: '编程练习',
+      nav_technical: '技术面试', nav_mock: 'AI模拟面试', nav_resume: '简历分析',
+      nav_progress: '我的进度', nav_admin: '管理员', nav_login: '登录', nav_register: '免费开始',
+      login_title: '欢迎回来', login_email: '电子邮件地址', login_password: '密码', login_btn: '登录',
+      register_title: '创建您的账户', register_name: '全名', register_btn: '创建账户',
+      otp_verify: '验证OTP', otp_resend: '重新发送OTP',
+      settings_profile: '个人资料', settings_language: '语言',
+      profile_save: '保存个人资料更改',
+      btn_save: '保存', btn_cancel: '取消', btn_logout: '退出登录',
+      btn_upload_photo: '上传照片', btn_remove_photo: '删除照片', btn_save_photo: '保存照片',
+      toast_saved: '设置已保存！', toast_lang_changed: '语言已更改！',
+    },
+    ar: {
+      nav_dashboard: 'لوحة التحكم', nav_aptitude: 'اختبار الكفاءة', nav_coding: 'البرمجة',
+      nav_technical: 'المقابلة التقنية', nav_mock: 'مقابلة تجريبية', nav_resume: 'السيرة الذاتية',
+      nav_progress: 'تقدمي', nav_admin: 'مدير', nav_login: 'تسجيل الدخول', nav_register: 'ابدأ مجانًا',
+      login_title: 'مرحبًا بعودتك', login_email: 'عنوان البريد الإلكتروني', login_password: 'كلمة المرور', login_btn: 'تسجيل الدخول',
+      register_title: 'إنشاء حسابك', register_name: 'الاسم الكامل', register_btn: 'إنشاء حساب',
+      otp_verify: 'تحقق من OTP', otp_resend: 'إعادة إرسال OTP',
+      settings_profile: 'الملف الشخصي', settings_language: 'اللغة',
+      profile_save: 'حفظ تغييرات الملف الشخصي',
+      btn_save: 'حفظ', btn_cancel: 'إلغاء', btn_logout: 'تسجيل الخروج',
+      btn_upload_photo: 'رفع صورة', btn_remove_photo: 'إزالة الصورة', btn_save_photo: 'حفظ الصورة',
+      photo_hint: 'JPG أو PNG أو WebP أو GIF. الحد الأقصى 5 ميغابايت.',
+      toast_saved: 'تم حفظ الإعدادات!', toast_lang_changed: 'تم تغيير اللغة!',
+    },
+    pt: {
+      nav_dashboard: 'Painel', nav_aptitude: 'Aptidão', nav_coding: 'Programação',
+      nav_technical: 'Técnico', nav_mock: 'Entrevista Simulada', nav_resume: 'Currículo',
+      nav_progress: 'Progresso', nav_admin: 'Admin', nav_login: 'Entrar', nav_register: 'Começar Grátis',
+      login_title: 'Bem-vindo de Volta', login_email: 'Endereço de E-mail', login_password: 'Senha', login_btn: 'Entrar',
+      register_title: 'Crie sua Conta', register_name: 'Nome Completo', register_btn: 'Criar Conta',
+      otp_verify: 'Verificar OTP', otp_resend: 'Reenviar OTP',
+      settings_profile: 'Perfil', settings_language: 'Idioma',
+      profile_save: 'Salvar Alterações do Perfil',
+      btn_save: 'Salvar', btn_cancel: 'Cancelar', btn_logout: 'Sair',
+      btn_upload_photo: 'Enviar Foto', btn_remove_photo: 'Remover Foto', btn_save_photo: 'Salvar Foto',
+      photo_hint: 'JPG, PNG, WebP ou GIF. Máx 5 MB.',
+      toast_saved: 'Configurações salvas!', toast_lang_changed: 'Idioma alterado!',
+    }
+  };
+
+  let currentLang = 'en';
+
+  function t(key) {
+    const lang = translations[currentLang] || {};
+    return lang[key] !== undefined ? lang[key] : (translations['en'][key] !== undefined ? translations['en'][key] : key);
+  }
+
+  function applyTranslations() {
+    const isRTL = currentLang === 'ar';
+    document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('lang', currentLang);
+
+    // Translate all elements with data-i18n attribute
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const text = t(key);
+      // For label elements acting as buttons, update textContent
+      el.textContent = text;
+    });
+  }
+
+  function setLanguage(code) {
+    if (!translations[code]) code = 'en';
+    currentLang = code;
+    applyTranslations();
+  }
+
+  function getCurrentLang() { return currentLang; }
+
+  return { t, setLanguage, applyTranslations, getCurrentLang };
+})();

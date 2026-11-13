@@ -1,0 +1,23 @@
+{
+  "name": "smart-interview-preparation-system",
+  "version": "1.0.0",
+  "description": "A full-stack Smart Interview Preparation System built with Express, SQLite, and modern UI",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.7.1",
+    "express-session": "^1.18.0",
+    "mammoth": "^1.12.2",
+    "multer": "^2.3.0",
+    "nodemailer": "^10.1.1",
+    "pdf-parse": "^2.4.5",
+    "sqlite3": "^5.1.7"
+  }
+}

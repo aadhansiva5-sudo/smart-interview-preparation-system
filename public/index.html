@@ -1,0 +1,2640 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Interview Preparation System</title>
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Application Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-dark">
+
+  <!-- App Wrapper -->
+  <div id="app">
+
+    <!-- Top Navigation Bar / Sidebar Navigation Container -->
+    <header class="navbar sidebar-nav-container" id="navbar">
+      <div class="nav-container">
+        <!-- Main Top Bar -->
+        <div class="nav-top-bar">
+          <div class="brand">
+            <div class="brand-icon">
+              <i data-lucide="brain-circuit"></i>
+            </div>
+            <span class="brand-name">Prep<span class="brand-highlight">Smart</span></span>
+          </div>
+
+          <!-- Auth buttons rendered dynamically if logged out -->
+          <div id="guest-nav" class="nav-group">
+            <button class="btn btn-outline" id="btn-show-login">Log In</button>
+            <button class="btn btn-primary" id="btn-show-register">Get Started Free</button>
+          </div>
+        </div>
+
+        <!-- Logged In Navbar Wrapper -->
+        <div id="user-nav" class="user-nav-wrapper hidden">
+          <!-- Top Right Stacked Profile & Controls -->
+          <div class="nav-top-right-section">
+            <div class="user-profile-stack">
+              <!-- Top: Test User Profile Avatar -->
+              <div class="user-chip-container" style="position: relative;">
+                <div class="user-chip sidebar-profile-card" id="user-profile-chip" role="button" tabindex="0" title="User Profile Menu">
+                  <div class="avatar" id="nav-avatar">U</div>
+                  <div class="user-meta">
+                    <span class="user-name" id="nav-user-name">User</span>
+                    <span class="user-role-badge" id="nav-target-role">Target Role</span>
+                  </div>
+                  <i data-lucide="chevron-down" class="icon-sm text-muted ms-1 chevron-icon"></i>
+                </div>
+
+                <!-- Profile Dropdown Menu -->
+                <div class="profile-dropdown glass-panel hidden" id="profile-dropdown-menu">
+                  <div class="dropdown-header">
+                    <div class="dropdown-user-name" id="dropdown-user-name">User Name</div>
+                    <div class="dropdown-user-email text-muted" id="dropdown-user-email">user@example.com</div>
+                  </div>
+                  <div class="dropdown-divider"></div>
+                  <div class="dropdown-menu-list">
+                    <button class="dropdown-item" id="dropdown-btn-profile">
+                      <i data-lucide="user"></i>
+                      <span>My Profile</span>
+                    </button>
+                    <button class="dropdown-item" id="dropdown-btn-progress">
+                      <i data-lucide="bar-chart-3"></i>
+                      <span>My Progress</span>
+                    </button>
+                    <button class="dropdown-item" id="dropdown-btn-target-role">
+                      <i data-lucide="target"></i>
+                      <span>Update Target Role</span>
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item text-danger" id="dropdown-btn-logout">
+                      <i data-lucide="log-out"></i>
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dedicated Separate Section: Settings & Logout Buttons -->
+              <div class="user-actions-subrow sidebar-logout-section">
+                <button class="btn btn-icon btn-sm" id="btn-open-settings" title="Profile Settings">
+                  <i data-lucide="settings"></i>
+                </button>
+                <button class="btn btn-outline-danger btn-sm" id="btn-logout" title="Log Out">
+                  <i data-lucide="log-out"></i>
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation Items Row -->
+          <div class="nav-buttons-row sidebar-nav" id="sidebar-nav">
+            <button class="btn nav-btn sidebar-nav-item nav-btn-dashboard active" id="btn-nav-dashboard">
+              <i data-lucide="layout-dashboard"></i>
+              <span data-i18n="nav_dashboard">Dashboard</span>
+            </button>
+            <button class="btn nav-btn sidebar-nav-item nav-btn-aptitude" id="btn-nav-aptitude">
+              <i data-lucide="brain"></i>
+              <span data-i18n="nav_aptitude">Aptitude Practice</span>
+            </button>
+            <button class="btn nav-btn sidebar-nav-item nav-btn-coding" id="btn-nav-coding">
+              <i data-lucide="code-2"></i>
+              <span data-i18n="nav_coding">Coding Practice</span>
+            </button>
+            <button class="btn nav-btn sidebar-nav-item nav-btn-technical" id="btn-nav-technical">
+              <i data-lucide="file-text"></i>
+              <span data-i18n="nav_technical">Technical Interview</span>
+            </button>
+            <button class="btn nav-btn sidebar-nav-item nav-btn-mock" id="btn-nav-mock">
+              <i data-lucide="bot"></i>
+              <span data-i18n="nav_mock">AI Mock Interview</span>
+            </button>
+            <button class="btn nav-btn sidebar-nav-item nav-btn-resume" id="btn-nav-resume">
+              <i data-lucide="file-search"></i>
+              <span data-i18n="nav_resume">Resume Analyzer</span>
+            </button>
+            <button class="btn nav-btn sidebar-nav-item nav-btn-progress" id="btn-nav-progress">
+              <i data-lucide="bar-chart-3"></i>
+              <span data-i18n="nav_progress">My Progress</span>
+            </button>
+            <button class="btn nav-btn sidebar-nav-item nav-btn-admin hidden" id="btn-nav-admin">
+              <i data-lucide="shield"></i>
+              <span data-i18n="nav_admin">Admin Panel</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Views -->
+    <main class="main-content">
+
+      <!-- ==================== VIEW 1: AUTHENTICATION / LANDING ==================== -->
+      <section id="auth-view" class="view-section">
+        <div class="landing-grid">
+
+          <!-- Hero Section -->
+          <div class="hero-content">
+            <div class="badge badge-accent mb-3">
+              <i data-lucide="sparkles" class="icon-sm"></i> Next-Gen Career Preparation
+            </div>
+            <h1 class="hero-title">
+              Ace Your Next Tech Interview With <span class="gradient-text">Confidence</span>
+            </h1>
+            <p class="hero-description">
+              Empower your career growth with structured preparation roadmaps, readiness tracking, and targeted technical domain practice.
+            </p>
+
+            <div class="hero-features">
+              <div class="feature-item">
+                <div class="feature-icon"><i data-lucide="check-circle-2"></i></div>
+                <span>Role-tailored preparation paths</span>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><i data-lucide="check-circle-2"></i></div>
+                <span>Real-time readiness analytics</span>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><i data-lucide="check-circle-2"></i></div>
+                <span>Curated technical &amp; behavioral question banks</span>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon"><i data-lucide="check-circle-2"></i></div>
+                <span>AI-powered mock interviews &amp; resume analysis</span>
+              </div>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="hero-social-proof">
+              <div class="proof-avatars">
+                <div class="proof-avatar" style="background:linear-gradient(135deg,#6366f1,#a855f7)">R</div>
+                <div class="proof-avatar" style="background:linear-gradient(135deg,#10b981,#06b6d4)">S</div>
+                <div class="proof-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">M</div>
+                <div class="proof-avatar" style="background:linear-gradient(135deg,#3b82f6,#6366f1)">A</div>
+              </div>
+              <p class="proof-text"><strong>2,400+</strong> students placed at top companies</p>
+            </div>
+          </div>
+
+          <!-- Auth Card Component -->
+          <div class="auth-card-container">
+
+            <!-- ===== AUTH PANEL (Login / Register) ===== -->
+            <div class="auth-card glass-panel" id="auth-panel">
+
+              <!-- Brand header inside card -->
+              <div class="auth-brand-row">
+                <div class="auth-brand-icon">
+                  <i data-lucide="brain-circuit"></i>
+                </div>
+                <div>
+                  <div class="auth-brand-name">Smart Placement Preparation</div>
+                  <div class="auth-brand-tag">Your AI-powered career companion</div>
+                </div>
+              </div>
+
+              <div class="auth-tabs">
+                <button class="auth-tab active" id="tab-login">Log In</button>
+                <button class="auth-tab" id="tab-register">Create Account</button>
+              </div>
+
+              <!-- LOGIN FORM -->
+              <form id="form-login" class="auth-form" novalidate>
+                <h3 class="form-title">Welcome Back</h3>
+                <p class="form-subtitle">Sign in to access your dashboard and continue preparing</p>
+
+                <div class="form-group" id="login-email-group">
+                  <label for="login-email">Email Address</label>
+                  <div class="input-wrapper">
+                    <i data-lucide="mail" class="input-icon"></i>
+                    <input type="email" id="login-email" placeholder="name@example.com"
+                           autocomplete="email" aria-describedby="login-email-error">
+                  </div>
+                  <div class="field-error hidden" id="login-email-error" role="alert">
+                    <i data-lucide="alert-circle" class="error-icon"></i>
+                    <span id="login-email-error-msg"></span>
+                  </div>
+                </div>
+
+                <div class="form-group" id="login-password-group">
+                  <label for="login-password">Password</label>
+                  <div class="input-wrapper">
+                    <i data-lucide="lock" class="input-icon"></i>
+                    <input type="password" id="login-password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                           autocomplete="current-password" aria-describedby="login-password-error">
+                    <button type="button" class="password-toggle" id="btn-toggle-login-pw"
+                            aria-label="Toggle password visibility">
+                      <i data-lucide="eye" id="login-pw-eye-icon"></i>
+                    </button>
+                  </div>
+                  <div class="field-error hidden" id="login-password-error" role="alert">
+                    <i data-lucide="alert-circle" class="error-icon"></i>
+                    <span id="login-password-error-msg"></span>
+                  </div>
+                </div>
+
+                <!-- Global form error -->
+                <div class="form-alert-error hidden" id="login-global-error" role="alert">
+                  <i data-lucide="shield-alert"></i>
+                  <span id="login-global-error-msg"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg auth-submit-btn" id="btn-login-submit">
+                  <span class="btn-text">Sign In</span>
+                  <span class="btn-spinner hidden" aria-hidden="true"></span>
+                  <i data-lucide="arrow-right" class="btn-arrow"></i>
+                </button>
+
+                <div class="auth-divider">
+                  <span>or</span>
+                </div>
+
+                <button type="button" class="btn btn-outline btn-block" id="btn-login-otp">
+                  <i data-lucide="shield-check"></i>
+                  <span>Sign In with OTP</span>
+                </button>
+
+                <div class="auth-footer-links">
+                  <span class="auth-link-text">Don't have an account?</span>
+                  <button type="button" class="auth-text-link" id="btn-go-register">Create one free &rarr;</button>
+                </div>
+              </form>
+
+              <!-- REGISTER FORM -->
+              <form id="form-register" class="auth-form hidden" novalidate>
+                <h3 class="form-title">Join PrepSmart</h3>
+                <p class="form-subtitle">Create your free account and start your placement journey</p>
+
+                <div class="form-group" id="reg-name-group">
+                  <label for="reg-name">Full Name</label>
+                  <div class="input-wrapper">
+                    <i data-lucide="user" class="input-icon"></i>
+                    <input type="text" id="reg-name" placeholder="John Doe"
+                           autocomplete="name" aria-describedby="reg-name-error">
+                  </div>
+                  <div class="field-error hidden" id="reg-name-error" role="alert">
+                    <i data-lucide="alert-circle" class="error-icon"></i>
+                    <span id="reg-name-error-msg"></span>
+                  </div>
+                </div>
+
+                <div class="form-group" id="reg-email-group">
+                  <label for="reg-email">Email Address</label>
+                  <div class="input-wrapper">
+                    <i data-lucide="mail" class="input-icon"></i>
+                    <input type="email" id="reg-email" placeholder="john@example.com"
+                           autocomplete="email" aria-describedby="reg-email-error">
+                  </div>
+                  <div class="field-error hidden" id="reg-email-error" role="alert">
+                    <i data-lucide="alert-circle" class="error-icon"></i>
+                    <span id="reg-email-error-msg"></span>
+                  </div>
+                </div>
+
+                <div class="form-group" id="reg-password-group">
+                  <label for="reg-password">Password <span class="label-hint">(min. 6 characters)</span></label>
+                  <div class="input-wrapper">
+                    <i data-lucide="lock" class="input-icon"></i>
+                    <input type="password" id="reg-password" placeholder="At least 6 characters"
+                           autocomplete="new-password" aria-describedby="reg-password-error">
+                    <button type="button" class="password-toggle" id="btn-toggle-reg-pw"
+                            aria-label="Toggle password visibility">
+                      <i data-lucide="eye" id="reg-pw-eye-icon"></i>
+                    </button>
+                  </div>
+                  <div class="pw-strength-meter" id="pw-strength-meter">
+                    <div class="pw-strength-bar" id="pw-strength-bar"></div>
+                  </div>
+                  <div class="pw-strength-label" id="pw-strength-label"></div>
+                  <div class="field-error hidden" id="reg-password-error" role="alert">
+                    <i data-lucide="alert-circle" class="error-icon"></i>
+                    <span id="reg-password-error-msg"></span>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="reg-role">Target Role</label>
+                    <select id="reg-role" class="select-input">
+                      <option value="Full Stack Developer">Full Stack Developer</option>
+                      <option value="Frontend Engineer">Frontend Engineer</option>
+                      <option value="Backend Engineer">Backend Engineer</option>
+                      <option value="Data Scientist">Data Scientist</option>
+                      <option value="DevOps &amp; Cloud Engineer">DevOps &amp; Cloud Engineer</option>
+                      <option value="Product Manager">Product Manager</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="reg-level">Experience</label>
+                    <select id="reg-level" class="select-input">
+                      <option value="Entry Level (0-2 yrs)">Entry Level (0-2 yrs)</option>
+                      <option value="Mid Level (2-5 yrs)">Mid Level (2-5 yrs)</option>
+                      <option value="Senior Level (5+ yrs)">Senior Level (5+ yrs)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Global form error -->
+                <div class="form-alert-error hidden" id="reg-global-error" role="alert">
+                  <i data-lucide="shield-alert"></i>
+                  <span id="reg-global-error-msg"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg auth-submit-btn" id="btn-reg-submit">
+                  <span class="btn-text">Create Account</span>
+                  <span class="btn-spinner hidden" aria-hidden="true"></span>
+                  <i data-lucide="arrow-right" class="btn-arrow"></i>
+                </button>
+
+                <div class="auth-footer-links">
+                  <span class="auth-link-text">Already have an account?</span>
+                  <button type="button" class="auth-text-link" id="btn-go-login">Sign in &rarr;</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- ===== OTP VERIFICATION PANEL ===== -->
+            <div class="auth-card glass-panel otp-card hidden" id="otp-panel">
+
+              <!-- Back button -->
+              <button class="otp-back-btn" id="btn-otp-back" aria-label="Back to login">
+                <i data-lucide="arrow-left"></i>
+                <span>Back</span>
+              </button>
+
+              <!-- OTP Icon & Header -->
+              <div class="otp-header">
+                <div class="otp-shield-icon">
+                  <i data-lucide="shield-check"></i>
+                </div>
+                <h3 class="form-title">Verify Your Identity</h3>
+                <p class="form-subtitle otp-subtitle">
+                  We sent a 4-digit code to<br>
+                  <strong id="otp-masked-email" class="otp-email">your email address</strong>
+                </p>
+                <!-- Dev mode notice -->
+                <div class="otp-dev-notice hidden" id="otp-dev-notice">
+                  <i data-lucide="terminal"></i>
+                  <span>Dev mode: Check your server console for the OTP code</span>
+                </div>
+              </div>
+
+              <!-- 4-digit OTP Input Boxes -->
+              <div class="otp-inputs-group" id="otp-inputs-group" role="group" aria-label="One-time password input">
+                <input class="otp-box" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1"
+                       id="otp-0" autocomplete="one-time-code" aria-label="OTP digit 1">
+                <input class="otp-box" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1"
+                       id="otp-1" aria-label="OTP digit 2">
+                <input class="otp-box" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1"
+                       id="otp-2" aria-label="OTP digit 3">
+                <input class="otp-box" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1"
+                       id="otp-3" aria-label="OTP digit 4">
+              </div>
+
+              <!-- OTP Error -->
+              <div class="form-alert-error hidden" id="otp-error" role="alert">
+                <i data-lucide="shield-alert"></i>
+                <span id="otp-error-msg"></span>
+              </div>
+
+              <!-- OTP Success -->
+              <div class="form-alert-success hidden" id="otp-success-msg" role="status">
+                <i data-lucide="check-circle-2"></i>
+                <span>OTP verified! Logging you in&hellip;</span>
+              </div>
+
+              <!-- Verify Button -->
+              <button type="button" class="btn btn-primary btn-block btn-lg auth-submit-btn" id="btn-verify-otp">
+                <span class="btn-text">Verify OTP</span>
+                <span class="btn-spinner hidden" aria-hidden="true"></span>
+                <i data-lucide="shield-check" class="btn-arrow"></i>
+              </button>
+
+              <!-- Resend OTP -->
+              <div class="otp-resend-row">
+                <span class="auth-link-text">Didn't receive the code?</span>
+                <button type="button" class="auth-text-link" id="btn-resend-otp">
+                  <span class="resend-text">Resend OTP</span>
+                  <span class="resend-spinner hidden" aria-hidden="true"></span>
+                  <span id="otp-countdown" class="otp-countdown"></span>
+                </button>
+              </div>
+
+              <!-- OTP Expiry Notice -->
+              <div class="otp-expiry-notice">
+                <i data-lucide="clock" class="icon-xs"></i>
+                Code expires in <strong id="otp-expiry-timer">5:00</strong>
+              </div>
+            </div>
+
+          </div><!-- /auth-card-container -->
+
+        </div>
+      </section>
+      <!-- ==================== VIEW 2: STUDENT DASHBOARD ==================== -->
+      <section id="dashboard-view" class="view-section hidden">
+        <div class="dashboard-container">
+          
+          <!-- Welcome Banner -->
+          <div class="welcome-banner glass-panel">
+            <div class="welcome-text">
+              <span class="greeting-tag">Student Portal</span>
+              <h2 class="greeting-title">Welcome back, <span id="dash-user-name" class="gradient-text">Student</span>! 👋</h2>
+              <p class="greeting-sub">Your target path is set to <strong id="dash-role-display">Full Stack Developer</strong>. Keep up the momentum!</p>
+            </div>
+            <div class="welcome-actions d-flex gap-2">
+              <button class="btn btn-primary" id="btn-open-progress-card">
+                <i data-lucide="bar-chart-3"></i>
+                <span>My Progress</span>
+              </button>
+              <button class="btn btn-secondary" id="btn-edit-target">
+                <i data-lucide="edit-3"></i>
+                <span>Update Target Role</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Metrics Stats Row -->
+          <div class="metrics-grid">
+            
+            <div class="metric-card glass-panel">
+              <div class="metric-header">
+                <span class="metric-title">Overall Readiness</span>
+                <div class="metric-icon icon-purple"><i data-lucide="gauge"></i></div>
+              </div>
+              <div class="metric-value-group">
+                <span class="metric-number" id="stat-readiness">68%</span>
+                <span class="badge badge-success" id="stat-readiness-label">Ready for Interviews</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="stat-readiness-bar" style="width: 68%;"></div>
+              </div>
+            </div>
+
+            <div class="metric-card glass-panel">
+              <div class="metric-header">
+                <span class="metric-title">Practice Time</span>
+                <div class="metric-icon icon-blue"><i data-lucide="clock"></i></div>
+              </div>
+              <div class="metric-value-group">
+                <span class="metric-number" id="stat-hours">12.5</span>
+                <span class="metric-unit">Hours</span>
+              </div>
+              <p class="metric-footer">+2.4 hrs completed this week</p>
+            </div>
+
+            <div class="metric-card glass-panel">
+              <div class="metric-header">
+                <span class="metric-title">Topics Mastered</span>
+                <div class="metric-icon icon-emerald"><i data-lucide="award"></i></div>
+              </div>
+              <div class="metric-value-group">
+                <span class="metric-number" id="stat-topics">8</span>
+                <span class="metric-unit">/ 12 Core Domains</span>
+              </div>
+              <p class="metric-footer">High proficiency in System Architecture</p>
+            </div>
+
+            <div class="metric-card glass-panel">
+              <div class="metric-header">
+                <span class="metric-title">Mock Sessions</span>
+                <div class="metric-icon icon-amber"><i data-lucide="video"></i></div>
+              </div>
+              <div class="metric-value-group">
+                <span class="metric-number" id="stat-interviews">3</span>
+                <span class="metric-unit">Completed</span>
+              </div>
+              <p class="metric-footer" id="stat-interviews-footer">Avg score: 8.2/10</p>
+            </div>
+
+          </div>
+
+          <!-- Recommendation & Weakest Area Summary Banner -->
+          <div class="glass-panel rec-summary-card mb-4" id="dash-rec-card">
+            <div class="rec-summary-content">
+              <div class="rec-badge-group">
+                <span class="badge badge-warning" id="dash-weakest-badge"><i data-lucide="alert-triangle" class="icon-xs"></i> Focus Needed: Aptitude</span>
+                <span class="badge badge-accent" id="dash-readiness-status-badge">Interview Ready</span>
+              </div>
+              <h3 class="rec-title" id="dash-top-rec-title">Recommended Practice: Strengthen Quantitative & Logical Aptitude</h3>
+              <p class="rec-desc text-secondary" id="dash-top-rec-desc">Your actual performance score indicates room for improvement. Take a diagnostic test to boost accuracy.</p>
+            </div>
+            <div class="rec-action">
+              <button class="btn btn-primary btn-lg" id="btn-dash-top-rec">
+                <i data-lucide="arrow-right"></i>
+                <span id="dash-top-rec-btn-label">Start Practice Now</span>
+              </button>
+            </div>
+          </div>
+
+
+          <!-- Main Dashboard Layout (Grid) -->
+          <div class="dashboard-grid">
+            
+            <!-- Left Column: Topics Progress & Practice -->
+            <div class="dash-col main-col">
+              
+              <div class="section-card glass-panel">
+                <div class="card-header">
+                  <div>
+                    <h3 class="card-title"><i data-lucide="book-open" class="title-icon"></i> Preparation Roadmap</h3>
+                    <p class="card-subtitle">Key domains required for your target role</p>
+                  </div>
+                </div>
+                <div class="topics-list" id="topics-container">
+                  <!-- Dynamic topic rows rendered here -->
+                </div>
+              </div>
+
+              <!-- Action Modules Grid -->
+              <div class="modules-header mt-4 mb-3">
+                <h3 class="card-title"><i data-lucide="layout-grid" class="title-icon"></i> Interview Toolkit</h3>
+              </div>
+
+              <div class="modules-grid">
+                
+                <div class="module-card glass-panel active-module" id="card-aptitude-module">
+                  <div class="module-badge badge-accent">Live Practice</div>
+                  <div class="module-icon"><i data-lucide="brain"></i></div>
+                  <h4 class="module-name">Aptitude Practice</h4>
+                  <p class="module-desc">Master Quantitative, Logical Reasoning, and Verbal Ability tests with real database data.</p>
+                  <button class="btn btn-sm btn-primary" id="btn-open-aptitude-card">
+                    Start Test
+                  </button>
+                </div>
+
+                <div class="module-card glass-panel active-module" id="card-technical-module">
+                  <div class="module-badge badge-success">Interactive</div>
+                  <div class="module-icon"><i data-lucide="file-text"></i></div>
+                  <h4 class="module-name">Technical Interview</h4>
+                  <p class="module-desc">Practice 30+ questions covering Python, Java, C, SQL, DBMS, OOP, HTML/CSS, & JS.</p>
+                  <button class="btn btn-sm btn-primary" id="btn-open-technical-card">
+                    Start Technical Test
+                  </button>
+                </div>
+
+                <div class="module-card glass-panel active-module" id="card-coding-module">
+                  <div class="module-badge badge-success">Live Workspace</div>
+                  <div class="module-icon"><i data-lucide="code-2"></i></div>
+                  <h4 class="module-name">Coding Sandbox</h4>
+                  <p class="module-desc">Solve 10+ beginner Python coding problems with automated test cases.</p>
+                  <button class="btn btn-sm btn-primary" id="btn-open-coding-card">
+                    Start Coding
+                  </button>
+                </div>
+
+                <div class="module-card glass-panel active-module" id="card-mock-module">
+                  <div class="module-badge badge-success">AI Powered</div>
+                  <div class="module-icon"><i data-lucide="bot"></i></div>
+                  <h4 class="module-name">AI Mock Interviewer</h4>
+                  <p class="module-desc">Simulate 5-question interviews with real-time AI evaluation and feedback.</p>
+                  <button class="btn btn-sm btn-primary" id="btn-open-mock-card">
+                    Start AI Interview
+                  </button>
+                </div>
+
+                <div class="module-card glass-panel active-module" id="card-resume-module">
+                  <div class="module-badge badge-accent">AI Matcher</div>
+                  <div class="module-icon"><i data-lucide="file-search"></i></div>
+                  <h4 class="module-name">Resume Analyzer</h4>
+                  <p class="module-desc">Upload your PDF/DOCX resume for target role match scoring and skill gap analysis.</p>
+                  <button class="btn btn-sm btn-primary" id="btn-open-resume-card">
+                    Analyze Resume
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Right Column: Upcoming Schedule & Recent Activity -->
+            <div class="dash-col side-col">
+              
+              <!-- Upcoming Sessions -->
+              <div class="section-card glass-panel">
+                <div class="card-header">
+                  <h3 class="card-title"><i data-lucide="calendar" class="title-icon"></i> Schedule</h3>
+                </div>
+                <div class="schedule-list" id="schedule-container">
+                  <!-- Dynamic schedule items -->
+                </div>
+              </div>
+
+              <!-- Quick Tips Card -->
+              <div class="section-card glass-panel tips-card mt-4">
+                <div class="tips-header">
+                  <i data-lucide="lightbulb" class="tips-icon"></i>
+                  <h4>Pro Preparation Tip</h4>
+                </div>
+                <p class="tips-text">
+                  Use the <strong>STAR method</strong> (Situation, Task, Action, Result) when answering behavioral questions to provide concise, structured evidence of past performance.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==================== VIEW 3: APTITUDE PRACTICE ==================== -->
+      <section id="aptitude-view" class="view-section hidden">
+        <div class="aptitude-container">
+          
+          <!-- View Header -->
+          <div class="aptitude-header glass-panel mb-4">
+            <div class="header-info">
+              <div class="badge badge-accent mb-2">
+                <i data-lucide="brain" class="icon-sm"></i> Skill Assessment Engine
+              </div>
+              <h2 class="section-title">Aptitude Practice Module</h2>
+              <p class="section-subtitle">
+                Select your focus category and difficulty level to test your problem-solving, analytical, and language skills.
+              </p>
+            </div>
+          </div>
+
+          <!-- STEP 1: CONFIG CARD -->
+          <div id="aptitude-config-card" class="glass-panel aptitude-card">
+            <h3 class="card-title mb-3"><i data-lucide="sliders" class="title-icon"></i> Test Configuration</h3>
+            
+            <form id="form-start-aptitude">
+              <div class="config-grid">
+                
+                <div class="form-group">
+                  <label for="aptitude-category">Category</label>
+                  <select id="aptitude-category" class="select-input">
+                    <option value="All Categories">All Categories</option>
+                    <option value="Quantitative Aptitude">Quantitative Aptitude</option>
+                    <option value="Logical Reasoning">Logical Reasoning</option>
+                    <option value="Verbal Ability">Verbal Ability</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="aptitude-difficulty">Difficulty</label>
+                  <select id="aptitude-difficulty" class="select-input">
+                    <option value="All Difficulties">All Difficulties</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="aptitude-limit">Questions Count</label>
+                  <select id="aptitude-limit" class="select-input">
+                    <option value="10">10 Questions</option>
+                    <option value="5">5 Questions</option>
+                    <option value="15">15 Questions</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="config-actions mt-4">
+                <button type="submit" class="btn btn-primary btn-lg" id="btn-start-test">
+                  <i data-lucide="play-circle"></i>
+                  <span>Start Practice Test</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- STEP 2: TEST CARD (ONE QUESTION AT A TIME) -->
+          <div id="aptitude-test-card" class="glass-panel aptitude-card hidden">
+            
+            <!-- Question Top Bar -->
+            <div class="test-top-bar mb-3">
+              <div class="test-meta">
+                <span class="badge badge-accent" id="test-category-badge">Quantitative Aptitude</span>
+                <span class="badge badge-purple" id="test-difficulty-badge">Medium</span>
+              </div>
+              <div class="question-counter">
+                Question <strong id="current-question-num">1</strong> of <span id="total-questions-num">10</span>
+              </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar-bg mb-4">
+              <div class="progress-bar-fill" id="test-progress-bar" style="width: 10%;"></div>
+            </div>
+
+            <!-- Question Drawer Pills -->
+            <div class="question-pills-row mb-4" id="question-pills-container">
+              <!-- Render 1..N pills dynamically -->
+            </div>
+
+            <!-- Main Question Area -->
+            <div class="question-body mb-4">
+              <h3 class="question-text" id="question-text">
+                Question text will be rendered here...
+              </h3>
+            </div>
+
+            <!-- 4 Options Grid -->
+            <div class="options-grid mb-4" id="options-container">
+              <!-- Dynamic 4 options cards rendered here -->
+            </div>
+
+            <!-- Test Bottom Navigation Controls -->
+            <div class="test-nav-actions">
+              <button class="btn btn-outline" id="btn-prev-question" disabled>
+                <i data-lucide="arrow-left"></i>
+                <span>Previous</span>
+              </button>
+
+              <div class="right-nav">
+                <button class="btn btn-secondary" id="btn-next-question">
+                  <span>Next Question</span>
+                  <i data-lucide="arrow-right"></i>
+                </button>
+
+                <button class="btn btn-primary hidden" id="btn-submit-test">
+                  <i data-lucide="check-circle-2"></i>
+                  <span>Submit Test</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+
+          <!-- STEP 3: TEST RESULTS CARD -->
+          <div id="aptitude-results-card" class="glass-panel aptitude-card hidden">
+            
+            <div class="results-banner text-center mb-4">
+              <div class="result-badge-circle" id="result-percentage-circle">
+                <span class="percentage-val" id="res-percentage">80%</span>
+              </div>
+              <h2 class="result-title" id="res-title">Great Job!</h2>
+              <p class="result-subtitle" id="res-subtitle">You demonstrated strong proficiency in this aptitude assessment.</p>
+            </div>
+
+            <!-- Metrics grid -->
+            <div class="metrics-grid mb-4">
+              <div class="metric-card glass-panel text-center">
+                <span class="metric-title">Total Questions</span>
+                <span class="metric-number text-white" id="res-total">10</span>
+              </div>
+              <div class="metric-card glass-panel text-center">
+                <span class="metric-title">Correct Answers</span>
+                <span class="metric-number text-success" id="res-correct">8</span>
+              </div>
+              <div class="metric-card glass-panel text-center">
+                <span class="metric-title">Wrong Answers</span>
+                <span class="metric-number text-danger" id="res-wrong">2</span>
+              </div>
+              <div class="metric-card glass-panel text-center">
+                <span class="metric-title">Final Score</span>
+                <span class="metric-number text-accent" id="res-score">8 / 10</span>
+              </div>
+            </div>
+
+            <!-- Detailed Question Breakdown with Explanations -->
+            <div class="explanations-section mb-4">
+              <h3 class="card-title mb-3"><i data-lucide="file-check-2" class="title-icon"></i> Detailed Question Review & Explanations</h3>
+              
+              <div class="explanations-list" id="explanations-container">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="results-actions">
+              <button class="btn btn-outline" id="btn-restart-aptitude">
+                <i data-lucide="rotate-ccw"></i>
+                <span>Take Another Test</span>
+              </button>
+              <button class="btn btn-primary" id="btn-back-dashboard">
+                <i data-lucide="layout-dashboard"></i>
+                <span>Return to Dashboard</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==================== VIEW 4: CODING PRACTICE ==================== -->
+      <section id="coding-view" class="view-section hidden">
+        <div class="coding-container">
+          
+          <!-- View Header -->
+          <div class="coding-header glass-panel mb-4">
+            <div class="header-info">
+              <div class="badge badge-success mb-2">
+                <i data-lucide="code-2" class="icon-sm"></i> Python Solution Engine
+              </div>
+              <h2 class="section-title">Coding Practice Sandbox</h2>
+              <p class="section-subtitle">
+                Master core programming problems, write Python solutions, and validate your code against automated test cases.
+              </p>
+            </div>
+          </div>
+
+          <!-- Main Coding Workspace Layout (Grid) -->
+          <div class="coding-workspace-grid">
+            
+            <!-- Left Column: Problem List & Problem Statement -->
+            <div class="coding-left-col">
+              
+              <!-- Problem Selector Card -->
+              <div class="glass-panel coding-card mb-4">
+                <div class="card-header pb-2">
+                  <h3 class="card-title"><i data-lucide="list-checks" class="title-icon"></i> Problem Directory</h3>
+                </div>
+                
+                <!-- Filter Pills -->
+                <div class="coding-filter-pills mb-3" id="coding-diff-filters">
+                  <button class="filter-pill active" data-diff="All">All Problems</button>
+                  <button class="filter-pill" data-diff="Easy">Easy</button>
+                  <button class="filter-pill" data-diff="Medium">Medium</button>
+                </div>
+
+                <!-- Problem List Items -->
+                <div class="problem-list" id="coding-problem-list">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+
+              <!-- Selected Problem Details -->
+              <div class="glass-panel coding-card" id="coding-problem-details">
+                <div class="problem-meta-row mb-3">
+                  <span class="badge badge-accent" id="code-prob-category">Category</span>
+                  <span class="badge badge-success" id="code-prob-difficulty">Difficulty</span>
+                  <span class="badge badge-outline" id="code-prob-status">Unattempted</span>
+                </div>
+
+                <h3 class="problem-title mb-3" id="code-prob-title">Select a problem to begin</h3>
+                <p class="problem-desc mb-4" id="code-prob-description">
+                  Choose any coding problem from the directory above to view its requirements and write your solution.
+                </p>
+
+                <!-- Example Input & Output -->
+                <div class="examples-grid mb-3">
+                  <div class="example-box">
+                    <span class="box-label"><i data-lucide="corner-down-right" class="icon-sm"></i> Example Input</span>
+                    <pre class="box-code" id="code-prob-example-input">"hello"</pre>
+                  </div>
+
+                  <div class="example-box">
+                    <span class="box-label"><i data-lucide="check-circle" class="icon-sm"></i> Expected Output</span>
+                    <pre class="box-code" id="code-prob-example-output">"olleh"</pre>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Column: Code Editor & Test Terminal -->
+            <div class="coding-right-col">
+              
+              <!-- Code Editor Card -->
+              <div class="glass-panel coding-card editor-card">
+                <div class="editor-header mb-3">
+                  <div class="lang-tag">
+                    <i data-lucide="terminal" class="icon-sm"></i>
+                    <span>Python 3.10</span>
+                  </div>
+
+                  <div class="editor-actions">
+                    <button class="btn btn-sm btn-outline" id="btn-reset-code" title="Reset to Starter Template">
+                      <i data-lucide="rotate-ccw"></i>
+                      <span>Reset</span>
+                    </button>
+                    <button class="btn btn-sm btn-primary" id="btn-submit-code">
+                      <i data-lucide="play"></i>
+                      <span>Submit Solution</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Code Editor Textarea -->
+                <div class="editor-wrapper mb-3">
+                  <textarea id="coding-editor" class="code-textarea" spellcheck="false" placeholder="# Write your Python solution here..."></textarea>
+                </div>
+              </div>
+
+              <!-- Terminal & Test Case Results -->
+              <div class="glass-panel coding-card results-terminal mt-4" id="coding-terminal">
+                <div class="terminal-header mb-3">
+                  <h4 class="card-title"><i data-lucide="cpu" class="title-icon"></i> Test Case Execution Terminal</h4>
+                  <span class="badge badge-accent" id="terminal-status-badge">Ready</span>
+                </div>
+
+                <div class="terminal-body" id="terminal-body">
+                  <div class="terminal-placeholder">
+                    <i data-lucide="play-circle" class="placeholder-icon mb-2"></i>
+                    <p>Click "Submit Solution" to run your code against automated test cases.</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== VIEW 5: TECHNICAL INTERVIEW PRACTICE ==================== -->
+      <section id="technical-view" class="view-section hidden">
+        <div class="technical-container">
+          
+          <!-- Header Banner -->
+          <div class="glass-panel technical-header">
+            <div class="header-content">
+              <span class="badge badge-accent">Interactive Technical Practice</span>
+              <h2>Technical Interview Practice</h2>
+              <p class="text-secondary">Master core computer science and programming concepts across 8 key technologies with real-time feedback and detailed explanations.</p>
+            </div>
+          </div>
+
+          <!-- Step 1: Configuration Card -->
+          <div class="glass-panel config-card" id="tech-config-card">
+            <div class="card-title">
+              <i data-lucide="sliders" class="icon-accent"></i>
+              <h3>Customize Technical Practice Session</h3>
+            </div>
+            <p class="card-subtitle mb-4">Select your target technology stack, difficulty level, and number of questions to get started.</p>
+
+            <form id="form-start-tech" class="config-grid">
+              <div class="form-group">
+                <label for="tech-category">Technology / Subject</label>
+                <select id="tech-category" class="select-input">
+                  <option value="All Technologies">All Technologies (Mixed)</option>
+                  <option value="Python">Python</option>
+                  <option value="Java">Java</option>
+                  <option value="C">C Language</option>
+                  <option value="SQL">SQL</option>
+                  <option value="DBMS">DBMS</option>
+                  <option value="OOP">OOP (Object-Oriented)</option>
+                  <option value="HTML/CSS">HTML / CSS</option>
+                  <option value="JavaScript">JavaScript</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="tech-difficulty">Difficulty Level</label>
+                <select id="tech-difficulty" class="select-input">
+                  <option value="All Difficulties">All Difficulties</option>
+                  <option value="Easy">Easy</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="tech-limit">Number of Questions</label>
+                <select id="tech-limit" class="select-input">
+                  <option value="5">5 Questions</option>
+                  <option value="10" selected>10 Questions</option>
+                  <option value="15">15 Questions</option>
+                </select>
+              </div>
+
+              <div class="form-group span-full">
+                <button type="submit" class="btn btn-primary btn-block" id="btn-start-tech-test">
+                  <i data-lucide="play"></i>
+                  <span>Start Practice Session</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Step 2: Interactive Practice Session Card -->
+          <div class="glass-panel test-card hidden" id="tech-test-card">
+            <div class="test-header">
+              <div class="test-meta">
+                <span class="badge badge-accent" id="tech-test-category-badge">Python</span>
+                <span class="badge badge-outline" id="tech-test-difficulty-badge">Medium</span>
+              </div>
+
+              <div class="test-progress-info">
+                <span>Question <strong id="tech-current-q-num">1</strong> of <strong id="tech-total-q-num">10</strong></span>
+              </div>
+            </div>
+
+            <div class="progress-bar-bg mb-4">
+              <div class="progress-bar-fill" id="tech-progress-bar" style="width: 10%;"></div>
+            </div>
+
+            <div class="question-drawer mb-4" id="tech-question-pills-container">
+              <!-- Question number pills rendered dynamically -->
+            </div>
+
+            <div class="question-body">
+              <h3 class="question-title" id="tech-question-text">Question text loads here...</h3>
+
+              <div class="options-grid" id="tech-options-container">
+                <!-- Option cards rendered dynamically -->
+              </div>
+
+              <!-- Explanation Box (revealed when an option is selected) -->
+              <div class="explanation-card hidden mt-4" id="tech-explanation-box">
+                <div class="exp-header mb-2">
+                  <span class="badge" id="tech-answer-status-badge">Correct ✓</span>
+                  <div class="exp-title"><i data-lucide="lightbulb" class="icon-sm"></i> Answer Explanation</div>
+                </div>
+                <div class="exp-content" id="tech-explanation-content">
+                  Explanation text loads here...
+                </div>
+              </div>
+            </div>
+
+            <div class="test-footer mt-4">
+              <button class="btn btn-outline" id="tech-btn-prev" disabled>
+                <i data-lucide="chevron-left"></i> Previous
+              </button>
+              <button class="btn btn-primary hidden" id="tech-btn-next">
+                Next Question <i data-lucide="chevron-right"></i>
+              </button>
+              <button class="btn btn-success hidden" id="tech-btn-submit">
+                <i data-lucide="check-circle"></i> Finish Session
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Session Results Summary Card -->
+          <div class="glass-panel results-card hidden" id="tech-results-card">
+            <div class="results-header">
+              <div class="score-circle">
+                <span class="score-pct" id="tech-res-percentage">80%</span>
+                <span class="score-label">Score</span>
+              </div>
+              <h2 id="tech-res-title">Practice Session Complete!</h2>
+              <p class="text-secondary" id="tech-res-subtitle">Here is your performance breakdown and detailed explanations.</p>
+            </div>
+
+            <div class="metrics-grid mb-4">
+              <div class="metric-card">
+                <span class="metric-val" id="tech-res-total">10</span>
+                <span class="metric-lbl">Total Questions</span>
+              </div>
+              <div class="metric-card card-success">
+                <span class="metric-val" id="tech-res-correct">8</span>
+                <span class="metric-lbl">Correct Answers</span>
+              </div>
+              <div class="metric-card card-warning">
+                <span class="metric-val" id="tech-res-wrong">2</span>
+                <span class="metric-lbl">Wrong Answers</span>
+              </div>
+              <div class="metric-card card-accent">
+                <span class="metric-val" id="tech-res-score">8 / 10</span>
+                <span class="metric-lbl">Final Score</span>
+              </div>
+            </div>
+
+            <div class="explanations-list" id="tech-explanations-container">
+              <!-- Detailed question explanations rendered dynamically -->
+            </div>
+
+            <div class="results-actions">
+              <button class="btn btn-outline" id="btn-restart-tech">
+                <i data-lucide="rotate-ccw"></i> Practice Another Stack
+              </button>
+              <button class="btn btn-primary" id="btn-tech-back-dashboard">
+                <i data-lucide="layout-dashboard"></i> Back to Dashboard
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== VIEW 6: AI MOCK INTERVIEW ==================== -->
+      <section id="mock-interview-view" class="view-section hidden">
+        <div class="mock-container">
+          
+          <!-- Header Banner -->
+          <div class="glass-panel mock-header">
+            <div class="header-content">
+              <span class="badge badge-success">AI-Powered Simulation</span>
+              <h2>AI Mock Interviewer</h2>
+              <p class="text-secondary">Simulate realistic job interviews with automated question generation, instant evaluation feedback, and a comprehensive final performance report.</p>
+            </div>
+          </div>
+
+          <!-- Stage 1: Setup Card -->
+          <div class="glass-panel config-card" id="mock-setup-card">
+            <div class="card-title">
+              <i data-lucide="sliders" class="icon-accent"></i>
+              <h3>Configure AI Mock Interview Session</h3>
+            </div>
+            <p class="card-subtitle mb-4">Set your target role, interview type, and difficulty level. The AI will ask 5 tailored questions.</p>
+
+            <form id="form-start-mock" class="config-grid">
+              <div class="form-group">
+                <label for="mock-role">Target Role</label>
+                <select id="mock-role" class="select-input">
+                  <option value="Full Stack Developer">Full Stack Developer</option>
+                  <option value="Frontend Engineer">Frontend Engineer</option>
+                  <option value="Backend Engineer">Backend Engineer</option>
+                  <option value="Data Scientist">Data Scientist</option>
+                  <option value="DevOps & Cloud Engineer">DevOps & Cloud Engineer</option>
+                  <option value="Product Manager">Product Manager</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="mock-type">Interview Type</label>
+                <select id="mock-type" class="select-input">
+                  <option value="Technical">Technical Interview</option>
+                  <option value="HR">HR & Behavioral Interview</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="mock-difficulty">Difficulty Level</label>
+                <select id="mock-difficulty" class="select-input">
+                  <option value="Easy">Easy</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+
+              <div class="form-group span-full">
+                <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-start-mock">
+                  <i data-lucide="play"></i>
+                  <span>Start Mock Interview</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Stage 2 & 3: Live Interview Screen & Evaluation Feedback Card -->
+          <div class="glass-panel test-card hidden" id="mock-interview-card">
+            <div class="test-header">
+              <div class="test-meta">
+                <span class="badge badge-accent" id="mock-badge-role">Full Stack Developer</span>
+                <span class="badge badge-outline" id="mock-badge-type">Technical</span>
+                <span class="badge badge-warning" id="mock-badge-diff">Medium</span>
+              </div>
+
+              <div class="test-progress-info">
+                <span>Question <strong id="mock-current-q-num">1</strong> of <strong>5</strong></span>
+              </div>
+            </div>
+
+            <div class="progress-bar-bg mb-4">
+              <div class="progress-bar-fill" id="mock-progress-bar" style="width: 20%;"></div>
+            </div>
+
+            <!-- Avatar & Question Display -->
+            <div class="interviewer-box mb-4">
+              <div class="interviewer-avatar">
+                <i data-lucide="bot" class="bot-icon"></i>
+                <div class="pulse-ring"></div>
+              </div>
+              <div class="interviewer-speech">
+                <div class="interviewer-name">AI Technical Interviewer</div>
+                <h3 class="mock-q-title" id="mock-question-text">Interview question loads here...</h3>
+              </div>
+            </div>
+
+            <!-- Answer Workspace -->
+            <div class="answer-section">
+              <label for="mock-answer-input" class="form-label mb-2" style="font-weight: 600;">Your Response:</label>
+              <textarea id="mock-answer-input" class="code-textarea" style="min-height: 140px; resize: vertical;" placeholder="Type your detailed response here... Explain your reasoning, technical tools, and practical examples clearly."></textarea>
+              <div class="text-muted mt-1" style="font-size: 0.8rem; text-align: right;" id="mock-char-counter">0 characters</div>
+
+              <button class="btn btn-primary btn-block mt-3" id="btn-submit-mock-answer">
+                <i data-lucide="send"></i>
+                <span>Submit Answer for AI Evaluation</span>
+              </button>
+            </div>
+
+            <!-- Stage 3: Instant Evaluation Feedback Box -->
+            <div class="explanation-card hidden mt-4" id="mock-eval-box">
+              <div class="exp-header mb-3">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge badge-success" id="mock-eval-score-badge">Score: 85 / 100</span>
+                  <span class="text-secondary" style="font-size: 0.85rem;" id="mock-eval-status-text">Evaluation Complete</span>
+                </div>
+              </div>
+
+              <div class="metrics-grid mb-3" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="metric-card" style="padding: 0.75rem;">
+                  <span class="metric-val" id="eval-metric-rel">90%</span>
+                  <span class="metric-lbl">Relevance</span>
+                </div>
+                <div class="metric-card" style="padding: 0.75rem;">
+                  <span class="metric-val" id="eval-metric-acc">85%</span>
+                  <span class="metric-lbl">Accuracy</span>
+                </div>
+                <div class="metric-card" style="padding: 0.75rem;">
+                  <span class="metric-val" id="eval-metric-comm">80%</span>
+                  <span class="metric-lbl">Communication</span>
+                </div>
+                <div class="metric-card" style="padding: 0.75rem;">
+                  <span class="metric-val" id="eval-metric-comp">85%</span>
+                  <span class="metric-lbl">Completeness</span>
+                </div>
+              </div>
+
+              <div class="exp-content p-3" style="background: rgba(0,0,0,0.3); border-radius: var(--radius-sm);" id="mock-eval-feedback">
+                Feedback text loads here...
+              </div>
+
+              <div class="mt-4 text-right">
+                <button class="btn btn-primary hidden" id="btn-next-mock-question">
+                  Next Question <i data-lucide="chevron-right"></i>
+                </button>
+                <button class="btn btn-success hidden" id="btn-finish-mock">
+                  <i data-lucide="check-circle"></i> Generate Final Interview Report
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Stage 4: Final Evaluation Report Card -->
+          <div class="glass-panel results-card hidden" id="mock-report-card">
+            <div class="results-header">
+              <div class="score-circle">
+                <span class="score-pct" id="mock-final-score-pct">84</span>
+                <span class="score-label">/ 100</span>
+              </div>
+              <h2 id="mock-report-title">Mock Interview Report</h2>
+              <p class="text-secondary" id="mock-report-subtitle">Detailed AI analysis of your interview performance across all 5 questions.</p>
+            </div>
+
+            <!-- Report Grid -->
+            <div class="report-grid mb-4">
+              <div class="report-block card-success">
+                <h4><i data-lucide="check-circle" class="icon-sm"></i> Key Strengths</h4>
+                <ul id="mock-report-strengths" class="report-list"></ul>
+              </div>
+
+              <div class="report-block card-warning">
+                <h4><i data-lucide="alert-circle" class="icon-sm"></i> Areas for Improvement</h4>
+                <ul id="mock-report-weaknesses" class="report-list"></ul>
+              </div>
+
+              <div class="report-block card-accent">
+                <h4><i data-lucide="lightbulb" class="icon-sm"></i> Actionable Suggestions</h4>
+                <ul id="mock-report-suggestions" class="report-list"></ul>
+              </div>
+
+              <div class="report-block">
+                <h4><i data-lucide="book-open" class="icon-sm"></i> Recommended Topics to Study</h4>
+                <div id="mock-report-topics" class="d-flex flex-wrap gap-2 mt-2"></div>
+              </div>
+            </div>
+
+            <!-- Question Breakdown List -->
+            <h4 class="mb-3"><i data-lucide="list" class="icon-sm"></i> Individual Question Evaluations</h4>
+            <div class="explanations-list mb-4" id="mock-report-questions-list"></div>
+
+            <div class="results-actions">
+              <button class="btn btn-outline" id="btn-restart-mock">
+                <i data-lucide="rotate-ccw"></i> Start Another Mock Interview
+              </button>
+              <button class="btn btn-primary" id="btn-mock-back-dashboard">
+                <i data-lucide="layout-dashboard"></i> Return to Dashboard
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== VIEW 7: RESUME ANALYZER ==================== -->
+      <section id="resume-view" class="view-section hidden">
+        <div class="resume-container">
+          
+          <!-- Header Banner -->
+          <div class="glass-panel resume-header">
+            <div class="header-content">
+              <span class="badge badge-accent">AI Skill Matching & Diagnostics</span>
+              <h2>Resume Analyzer & Skill Matcher</h2>
+              <p class="text-secondary">Upload your PDF or DOCX resume to analyze skill coverage against your target role, detect gaps, and get actionable improvement recommendations.</p>
+            </div>
+          </div>
+
+          <!-- Section 1: Resume Upload Card -->
+          <div class="glass-panel config-card" id="resume-upload-card">
+            <div class="card-title">
+              <i data-lucide="upload-cloud" class="icon-accent"></i>
+              <h3>Upload Resume for Analysis</h3>
+            </div>
+            <p class="card-subtitle mb-4">Supported formats: PDF (.pdf) and Word (.docx). Maximum file size: 5MB.</p>
+
+            <form id="form-upload-resume" class="config-grid" style="grid-template-columns: 1fr;">
+              <div class="form-group">
+                <label for="resume-role">Target Job Role</label>
+                <select id="resume-role" class="select-input">
+                  <option value="Full Stack Developer">Full Stack Developer</option>
+                  <option value="Frontend Engineer">Frontend Engineer</option>
+                  <option value="Backend Engineer">Backend Engineer</option>
+                  <option value="Data Scientist">Data Scientist</option>
+                  <option value="DevOps & Cloud Engineer">DevOps & Cloud Engineer</option>
+                  <option value="Product Manager">Product Manager</option>
+                </select>
+              </div>
+
+              <!-- Dropzone Box -->
+              <div class="dropzone-box" id="resume-drop-zone">
+                <input type="file" id="resume-file-input" accept=".pdf,.docx" class="dropzone-file-input" required>
+                <div class="dropzone-content" id="dropzone-content">
+                  <i data-lucide="file-up" class="dropzone-icon"></i>
+                  <h4 class="dropzone-title">Drag & Drop your resume file here</h4>
+                  <p class="dropzone-sub">or click to browse your computer (.pdf, .docx up to 5MB)</p>
+                </div>
+                <div class="dropzone-file-info hidden" id="dropzone-file-info">
+                  <i data-lucide="file-check-2" class="icon-success"></i>
+                  <div class="file-details">
+                    <span class="file-name" id="selected-file-name">resume.pdf</span>
+                    <span class="file-size text-muted" id="selected-file-size">1.2 MB</span>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-outline-danger" id="btn-remove-file">Remove</button>
+                </div>
+              </div>
+
+              <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-submit-resume">
+                  <i data-lucide="sparkles"></i>
+                  <span>Analyze Resume</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Section 2: Analysis Results Card (Hidden by default) -->
+          <div class="glass-panel results-card hidden" id="resume-results-card">
+            <div class="results-header">
+              <div class="score-circle">
+                <span class="score-pct" id="resume-score-val">82</span>
+                <span class="score-label">/ 100</span>
+              </div>
+              <h2 id="resume-results-title">Resume Analysis Results</h2>
+              <p class="text-secondary" id="resume-results-subtitle">Detailed evaluation against target role requirements.</p>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="metrics-grid mb-4">
+              <div class="metric-card card-accent">
+                <span class="metric-val" id="resume-metric-match">85%</span>
+                <span class="metric-lbl">Role Match</span>
+              </div>
+              <div class="metric-card card-success">
+                <span class="metric-val" id="resume-metric-detected">9</span>
+                <span class="metric-lbl">Detected Skills</span>
+              </div>
+              <div class="metric-card card-warning">
+                <span class="metric-val" id="resume-metric-missing">4</span>
+                <span class="metric-lbl">Missing Skills</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-val" id="resume-metric-overall">82 / 100</span>
+                <span class="metric-lbl">Overall Score</span>
+              </div>
+            </div>
+
+            <!-- Skills Analysis Grid -->
+            <div class="report-grid mb-4">
+              <div class="report-block card-success">
+                <h4><i data-lucide="check-circle-2" class="icon-sm"></i> Detected Skills</h4>
+                <div id="resume-detected-skills" class="d-flex flex-wrap gap-2 mt-2"></div>
+              </div>
+
+              <div class="report-block card-warning">
+                <h4><i data-lucide="alert-triangle" class="icon-sm"></i> Missing Skills</h4>
+                <div id="resume-missing-skills" class="d-flex flex-wrap gap-2 mt-2"></div>
+              </div>
+
+              <div class="report-block">
+                <h4><i data-lucide="thumbs-up" class="icon-sm"></i> Key Strengths</h4>
+                <ul id="resume-strengths-list" class="report-list"></ul>
+              </div>
+
+              <div class="report-block">
+                <h4><i data-lucide="alert-circle" class="icon-sm"></i> Areas for Improvement</h4>
+                <ul id="resume-weaknesses-list" class="report-list"></ul>
+              </div>
+
+              <div class="report-block span-full">
+                <h4><i data-lucide="key" class="icon-sm"></i> Relevant Industry Keywords</h4>
+                <div id="resume-keywords-pills" class="d-flex flex-wrap gap-2 mt-2"></div>
+              </div>
+
+              <div class="report-block span-full card-accent">
+                <h4><i data-lucide="lightbulb" class="icon-sm"></i> Actionable Suggestions</h4>
+                <ul id="resume-suggestions-list" class="report-list"></ul>
+              </div>
+            </div>
+
+            <div class="results-actions">
+              <button class="btn btn-outline" id="btn-reanalyze-resume">
+                <i data-lucide="upload"></i> Upload Another Resume
+              </button>
+              <button class="btn btn-primary" id="btn-resume-back-dashboard">
+                <i data-lucide="layout-dashboard"></i> Return to Dashboard
+              </button>
+            </div>
+          </div>
+
+          <!-- Section 3: Resume Analysis History Section -->
+          <div class="glass-panel section-card mt-4" id="resume-history-card">
+            <div class="card-header">
+              <h3 class="card-title"><i data-lucide="history" class="title-icon"></i> Resume Analysis History</h3>
+            </div>
+            <div id="resume-history-container" class="history-list mt-2">
+              <p class="text-muted">No previous resume analyses found.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== VIEW 8: MY PROGRESS & RECOMMENDATIONS ==================== -->
+      <section id="progress-view" class="view-section hidden">
+        <div class="progress-container">
+          
+          <!-- Header Banner -->
+          <div class="glass-panel progress-header">
+            <div class="header-content">
+              <span class="badge badge-accent" id="progress-status-badge">Interview Ready</span>
+              <h2>Performance Analytics & Recommendations</h2>
+              <p class="text-secondary">Track your real-time preparation progress across all 5 core modules and follow AI-guided recommendations to target weak areas.</p>
+            </div>
+            <div class="overall-gauge-box">
+              <div class="overall-circle">
+                <span class="overall-val" id="progress-overall-val">78%</span>
+                <span class="overall-lbl">Readiness Score</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 1: Module Progress Breakdown Grid -->
+          <div class="progress-modules-grid mb-4">
+            
+            <div class="glass-panel module-progress-card" data-key="aptitude">
+              <div class="card-head">
+                <div class="icon-box"><i data-lucide="brain"></i></div>
+                <div>
+                  <h4>Aptitude Practice</h4>
+                  <span class="card-subtitle" id="prog-count-aptitude">0 attempts</span>
+                </div>
+                <span class="score-pill" id="prog-score-aptitude">--</span>
+              </div>
+              <div class="progress-bar-bg mt-3">
+                <div class="progress-bar-fill" id="bar-aptitude" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <div class="glass-panel module-progress-card" data-key="coding">
+              <div class="card-head">
+                <div class="icon-box"><i data-lucide="code-2"></i></div>
+                <div>
+                  <h4>Coding Practice</h4>
+                  <span class="card-subtitle" id="prog-count-coding">0 submissions</span>
+                </div>
+                <span class="score-pill" id="prog-score-coding">--</span>
+              </div>
+              <div class="progress-bar-bg mt-3">
+                <div class="progress-bar-fill" id="bar-coding" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <div class="glass-panel module-progress-card" data-key="technical">
+              <div class="card-head">
+                <div class="icon-box"><i data-lucide="file-text"></i></div>
+                <div>
+                  <h4>Technical Interview</h4>
+                  <span class="card-subtitle" id="prog-count-technical">0 quizzes</span>
+                </div>
+                <span class="score-pill" id="prog-score-technical">--</span>
+              </div>
+              <div class="progress-bar-bg mt-3">
+                <div class="progress-bar-fill" id="bar-technical" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <div class="glass-panel module-progress-card" data-key="mock">
+              <div class="card-head">
+                <div class="icon-box"><i data-lucide="bot"></i></div>
+                <div>
+                  <h4>AI Mock Interview</h4>
+                  <span class="card-subtitle" id="prog-count-mock">0 sessions</span>
+                </div>
+                <span class="score-pill" id="prog-score-mock">--</span>
+              </div>
+              <div class="progress-bar-bg mt-3">
+                <div class="progress-bar-fill" id="bar-mock" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <div class="glass-panel module-progress-card" data-key="resume">
+              <div class="card-head">
+                <div class="icon-box"><i data-lucide="file-search"></i></div>
+                <div>
+                  <h4>Resume Analyzer</h4>
+                  <span class="card-subtitle" id="prog-count-resume">0 analyses</span>
+                </div>
+                <span class="score-pill" id="prog-score-resume">--</span>
+              </div>
+              <div class="progress-bar-bg mt-3">
+                <div class="progress-bar-fill" id="bar-resume" style="width: 0%;"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Section 2: Strong & Weak Areas -->
+          <div class="report-grid mb-4">
+            <div class="report-block card-success">
+              <h4><i data-lucide="check-circle-2" class="icon-sm"></i> Strong Preparation Areas</h4>
+              <div id="prog-strong-areas" class="d-flex flex-wrap gap-2 mt-2"></div>
+            </div>
+
+            <div class="report-block card-warning">
+              <h4><i data-lucide="alert-triangle" class="icon-sm"></i> Weak Areas / Gaps to Address</h4>
+              <div id="prog-weak-areas" class="d-flex flex-wrap gap-2 mt-2"></div>
+            </div>
+          </div>
+
+          <!-- Section 3: Smart Recommendations List -->
+          <div class="glass-panel section-card" id="progress-recommendations-card">
+            <div class="card-header mb-3">
+              <h3 class="card-title"><i data-lucide="sparkles" class="title-icon icon-accent"></i> Recommended Practice Activities</h3>
+              <span class="card-subtitle">Personalized action plan based on your stored performance metrics</span>
+            </div>
+            <div id="progress-recommendations-list" class="recommendations-list">
+              <p class="text-muted">Loading personalized recommendations...</p>
+            </div>
+          </div>
+
+          <!-- Section 4: Knowledge Tracing & Skill Mastery Matrix -->
+          <div class="glass-panel section-card mt-4" id="progress-knowledge-tracing-card">
+            <div class="card-header mb-3">
+              <h3 class="card-title"><i data-lucide="line-chart" class="title-icon icon-purple"></i> Skill Mastery Matrix (Knowledge Tracing)</h3>
+              <span class="card-subtitle">Estimated skill mastery scores derived from assessment evidence over time</span>
+            </div>
+            
+            <div id="kt-matrix-container" class="table-responsive">
+              <table class="admin-table" id="kt-matrix-table">
+                <thead>
+                  <tr>
+                    <th>Skill / Concept</th>
+                    <th>Category</th>
+                    <th>Estimated Mastery *</th>
+                    <th>Learning Trend</th>
+                    <th>Observations</th>
+                    <th>Evidence & Explanation</th>
+                  </tr>
+                </thead>
+                <tbody id="kt-matrix-tbody">
+                  <tr><td colspan="6" class="text-center text-muted p-3">Loading Knowledge Tracing analysis...</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="text-muted small mt-2"><em>* Mastery values are statistical estimates updated after each assessment observation. Unverified skills from resumes are marked accordingly.</em></p>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ==================== VIEW 9: ADMIN PANEL ==================== -->
+      <section id="admin-view" class="view-section hidden">
+        <div class="admin-container">
+          
+          <!-- Header Banner -->
+          <div class="glass-panel admin-header mb-4">
+            <div class="header-info">
+              <div class="badge badge-warning mb-2">
+                <i data-lucide="shield" class="icon-sm"></i> Administrator Command Center
+              </div>
+              <h2 class="section-title">Platform Administration & Analytics</h2>
+              <p class="section-subtitle">
+                Monitor system metrics, review registered user progress, and manage question repositories.
+              </p>
+            </div>
+
+            <!-- Admin Sub Tabs -->
+            <div class="admin-tabs mt-3 d-flex gap-2 flex-wrap">
+              <button class="btn btn-sm btn-primary admin-tab active" id="tab-admin-stats">
+                <i data-lucide="gauge"></i> Platform Overview
+              </button>
+              <button class="btn btn-sm btn-outline admin-tab" id="tab-admin-users">
+                <i data-lucide="users"></i> User Management
+              </button>
+              <button class="btn btn-sm btn-outline admin-tab" id="tab-admin-questions">
+                <i data-lucide="database"></i> Question Management
+              </button>
+              <button class="btn btn-sm btn-outline admin-tab" id="tab-admin-sessions">
+                <i data-lucide="activity"></i> Session Monitoring
+              </button>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 1: PLATFORM STATS OVERVIEW -->
+          <div id="admin-panel-stats" class="admin-sub-panel">
+            <div class="metrics-grid mb-4" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+              
+              <div class="metric-card glass-panel text-center">
+                <div class="metric-icon icon-blue mx-auto mb-2"><i data-lucide="users"></i></div>
+                <span class="metric-title">Total Registered Users</span>
+                <span class="metric-number text-white" id="admin-stat-users">0</span>
+              </div>
+
+              <div class="metric-card glass-panel text-center">
+                <div class="metric-icon icon-emerald mx-auto mb-2"><i data-lucide="user-check"></i></div>
+                <span class="metric-title">Active Practicing Users</span>
+                <span class="metric-number text-success" id="admin-stat-active">0</span>
+              </div>
+
+              <div class="metric-card glass-panel text-center">
+                <div class="metric-icon icon-purple mx-auto mb-2"><i data-lucide="brain"></i></div>
+                <span class="metric-title">Aptitude Attempts</span>
+                <span class="metric-number text-accent" id="admin-stat-aptitude">0</span>
+              </div>
+
+              <div class="metric-card glass-panel text-center">
+                <div class="metric-icon icon-blue mx-auto mb-2"><i data-lucide="code-2"></i></div>
+                <span class="metric-title">Coding Submissions</span>
+                <span class="metric-number text-white" id="admin-stat-coding">0</span>
+              </div>
+
+              <div class="metric-card glass-panel text-center">
+                <div class="metric-icon icon-amber mx-auto mb-2"><i data-lucide="file-text"></i></div>
+                <span class="metric-title">Technical Attempts</span>
+                <span class="metric-number text-warning" id="admin-stat-technical">0</span>
+              </div>
+
+              <div class="metric-card glass-panel text-center">
+                <div class="metric-icon icon-purple mx-auto mb-2"><i data-lucide="bot"></i></div>
+                <span class="metric-title">AI Mock Interviews</span>
+                <span class="metric-number text-accent" id="admin-stat-mock">0</span>
+              </div>
+
+              <div class="metric-card glass-panel text-center">
+                <div class="metric-icon icon-emerald mx-auto mb-2"><i data-lucide="trending-up"></i></div>
+                <span class="metric-title">Avg Platform Readiness</span>
+                <span class="metric-number text-success" id="admin-stat-avg">0%</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 2: USER MANAGEMENT -->
+          <div id="admin-panel-users" class="admin-sub-panel hidden">
+            <div class="glass-panel section-card">
+              <div class="card-header d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <h3 class="card-title"><i data-lucide="users" class="title-icon"></i> Registered User Roster</h3>
+                  <p class="card-subtitle">View account profiles, readiness scores, and total attempt counts.</p>
+                </div>
+                <div class="input-wrapper" style="width: 250px;">
+                  <i data-lucide="search" class="input-icon"></i>
+                  <input type="text" id="admin-user-search" placeholder="Search by name or email..." class="form-control">
+                </div>
+              </div>
+
+              <div class="table-responsive">
+                <table class="admin-table" id="admin-users-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>User Name</th>
+                      <th>Email</th>
+                      <th>Target Role</th>
+                      <th>Readiness</th>
+                      <th>Attempts</th>
+                      <th>Role</th>
+                      <th class="text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-users-tbody">
+                    <tr><td colspan="7" class="text-center text-muted p-3">Loading users...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUB-VIEW 3: QUESTION MANAGEMENT -->
+          <div id="admin-panel-questions" class="admin-sub-panel hidden">
+            <div class="glass-panel section-card">
+              <div class="card-header d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <h3 class="card-title"><i data-lucide="database" class="title-icon"></i> Question Repository Management</h3>
+                  <p class="card-subtitle">Manage practice questions for Aptitude, Coding, and Technical Interview modules.</p>
+                </div>
+                <button class="btn btn-primary" id="btn-admin-add-q">
+                  <i data-lucide="plus-circle"></i>
+                  <span>Add New Question</span>
+                </button>
+              </div>
+
+              <div class="d-flex gap-2 mb-3">
+                <button class="filter-pill active admin-q-module-pill" data-mod="aptitude">Aptitude Questions</button>
+                <button class="filter-pill admin-q-module-pill" data-mod="coding">Coding Sandbox Problems</button>
+                <button class="filter-pill admin-q-module-pill" data-mod="technical">Technical Interview Questions</button>
+              </div>
+
+              <div class="table-responsive">
+                <table class="admin-table" id="admin-questions-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Title / Question</th>
+                      <th>Category</th>
+                      <th>Difficulty</th>
+                      <th class="text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-questions-tbody">
+                    <tr><td colspan="5" class="text-center text-muted p-3">Loading questions...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+          <!-- SUB-VIEW 4: SESSION MONITORING -->
+          <div id="admin-panel-sessions" class="admin-sub-panel hidden">
+            <div class="glass-panel section-card">
+              <div class="card-header mb-3">
+                <div>
+                  <h3 class="card-title"><i data-lucide="activity" class="title-icon icon-accent"></i> Real-time Session Monitoring Feed</h3>
+                  <p class="card-subtitle">Track recent AI mock interviews and module practice attempts across all platform users.</p>
+                </div>
+              </div>
+
+              <h4 class="mt-3 mb-2"><i data-lucide="bot" class="icon-sm text-accent"></i> Recent AI Mock Interviews</h4>
+              <div class="table-responsive mb-4">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>User</th>
+                      <th>Target Role</th>
+                      <th>Type</th>
+                      <th>Difficulty</th>
+                      <th>Final Score</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-sessions-mock-tbody">
+                    <tr><td colspan="7" class="text-center text-muted p-3">Loading sessions...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h4 class="mt-4 mb-2"><i data-lucide="brain" class="icon-sm text-purple"></i> Recent Aptitude Practice Attempts</h4>
+              <div class="table-responsive mb-4">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>User</th>
+                      <th>Category</th>
+                      <th>Difficulty</th>
+                      <th>Score</th>
+                      <th>Percentage</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-sessions-aptitude-tbody">
+                    <tr><td colspan="7" class="text-center text-muted p-3">Loading sessions...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h4 class="mt-4 mb-2"><i data-lucide="code-2" class="icon-sm text-blue"></i> Recent Coding Submissions</h4>
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>User</th>
+                      <th>Problem Title</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-sessions-coding-tbody">
+                    <tr><td colspan="5" class="text-center text-muted p-3">Loading sessions...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+
+    <!-- ==================== REDESIGNED SETTINGS MODAL & PANEL ==================== -->
+    <div class="modal-overlay hidden" id="modal-settings">
+      <div class="settings-modal-card glass-panel">
+        
+        <!-- Settings Header -->
+        <div class="settings-header">
+          <div class="settings-title-group">
+            <div class="settings-header-icon">
+              <i data-lucide="settings"></i>
+            </div>
+            <div>
+              <h2 class="settings-main-title">System Settings & Preferences</h2>
+              <p class="settings-subtitle">Manage your profile, visual theme, security, notifications, and accessibility</p>
+            </div>
+          </div>
+          <button class="btn-close" id="btn-close-modal" title="Close Settings"><i data-lucide="x"></i></button>
+        </div>
+
+        <!-- Settings Body: Left Sidebar + Right Pane Content -->
+        <div class="settings-body">
+          
+          <!-- Left Sidebar Navigation -->
+          <aside class="settings-sidebar">
+            <nav class="settings-nav-list" id="settings-sidebar-nav">
+              <button type="button" class="settings-nav-item active" data-section="profile">
+                <i data-lucide="user"></i>
+                <span>Profile</span>
+              </button>
+              <button type="button" class="settings-nav-item" data-section="appearance">
+                <i data-lucide="palette"></i>
+                <span>Appearance</span>
+              </button>
+              <button type="button" class="settings-nav-item" data-section="notifications">
+                <i data-lucide="bell"></i>
+                <span>Notifications</span>
+              </button>
+              <button type="button" class="settings-nav-item" data-section="security">
+                <i data-lucide="shield-check"></i>
+                <span>Account & Security</span>
+              </button>
+              <button type="button" class="settings-nav-item" data-section="privacy">
+                <i data-lucide="lock"></i>
+                <span>Privacy</span>
+              </button>
+              <button type="button" class="settings-nav-item" data-section="language">
+                <i data-lucide="globe"></i>
+                <span>Language</span>
+              </button>
+              <button type="button" class="settings-nav-item" data-section="preferences">
+                <i data-lucide="sliders"></i>
+                <span>Preferences</span>
+              </button>
+              <button type="button" class="settings-nav-item" data-section="accessibility">
+                <i data-lucide="eye"></i>
+                <span>Accessibility</span>
+              </button>
+              <button type="button" class="settings-nav-item" data-section="help">
+                <i data-lucide="help-circle"></i>
+                <span>Help & Support</span>
+              </button>
+              <button type="button" class="settings-nav-item" data-section="about">
+                <i data-lucide="info"></i>
+                <span>About</span>
+              </button>
+            </nav>
+          </aside>
+
+          <!-- Right Content Area -->
+          <main class="settings-content-body">
+            
+            <!-- SECTION 1: PROFILE -->
+            <div class="settings-pane active" id="settings-pane-profile">
+              <div class="pane-header">
+                <h3 data-i18n="profile_section">Profile Information</h3>
+                <p class="text-secondary">Update your public identity, avatar style, and target job role</p>
+              </div>
+
+              <form id="form-settings" class="settings-pane-form">
+                <!-- Profile Photo Upload -->
+                <div class="settings-card glass-panel mb-4">
+                  <h4 class="card-section-title"><i data-lucide="camera" class="title-icon"></i> <span data-i18n="avatar_title">Profile Picture &amp; Avatar</span></h4>
+                  <div class="photo-upload-row">
+                    <div class="photo-preview-wrapper">
+                      <div class="avatar-preview-lg" id="settings-avatar-preview">U</div>
+                      <img id="settings-photo-preview" class="avatar-photo-preview hidden" alt="Profile photo" />
+                      <button type="button" class="photo-camera-btn" id="btn-trigger-photo-upload" title="Upload Photo">
+                        <i data-lucide="camera"></i>
+                      </button>
+                    </div>
+                    <div class="photo-upload-controls">
+                      <input type="file" id="input-photo-upload" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden">
+                      <div class="photo-actions-group">
+                        <label for="input-photo-upload" class="btn btn-secondary btn-sm" id="btn-upload-photo-label" data-i18n="btn_upload_photo" style="cursor:pointer">Upload Photo</label>
+                        <button type="button" class="btn btn-primary btn-sm hidden" id="btn-save-photo"><i data-lucide="save"></i> <span data-i18n="btn_save_photo">Save Photo</span></button>
+                        <button type="button" class="btn btn-outline-danger btn-sm" id="btn-remove-photo" data-i18n="btn_remove_photo">Remove Photo</button>
+                      </div>
+                      <p class="text-muted text-sm mt-2" data-i18n="photo_hint">JPG, PNG, WebP or GIF. Max 5 MB.</p>
+                      <div id="avatar-preset-section">
+                        <p class="text-secondary text-sm mb-2 mt-3" data-i18n="avatar_subtitle">Choose your avatar badge theme</p>
+                        <div class="avatar-preset-picker" id="avatar-preset-picker">
+                          <button type="button" class="avatar-preset active" data-color="blue">U</button>
+                          <button type="button" class="avatar-preset preset-emerald" data-color="emerald">U</button>
+                          <button type="button" class="avatar-preset preset-purple" data-color="purple">U</button>
+                          <button type="button" class="avatar-preset preset-amber" data-color="amber">U</button>
+                          <button type="button" class="avatar-preset preset-rose" data-color="rose">U</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="settings-card glass-panel mb-4">
+                  <h4 class="card-section-title"><i data-lucide="user-check" class="title-icon"></i> Personal & Target Role Profile</h4>
+                  <div class="form-grid-2">
+                    <div class="form-group">
+                      <label for="edit-profile-name">Full Name</label>
+                      <input type="text" id="edit-profile-name" class="select-input" placeholder="User Name" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="edit-profile-email">Email Address</label>
+                      <input type="email" id="edit-profile-email" class="select-input" placeholder="user@example.com" disabled>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="edit-role">Target Job Role</label>
+                      <select id="edit-role" class="select-input">
+                        <option value="Full Stack Developer">Full Stack Developer</option>
+                        <option value="Frontend Engineer">Frontend Engineer</option>
+                        <option value="Backend Engineer">Backend Engineer</option>
+                        <option value="Data Scientist">Data Scientist</option>
+                        <option value="DevOps & Cloud Engineer">DevOps & Cloud Engineer</option>
+                        <option value="Product Manager">Product Manager</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="edit-level">Experience Level</label>
+                      <select id="edit-level" class="select-input">
+                        <option value="Entry Level (0-2 yrs)">Entry Level (0-2 yrs)</option>
+                        <option value="Mid Level (2-5 yrs)">Mid Level (2-5 yrs)</option>
+                        <option value="Senior Level (5+ yrs)">Senior Level (5+ yrs)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pane-footer-actions">
+                  <button type="button" class="btn btn-outline" id="btn-cancel-settings" data-i18n="btn_cancel">Cancel</button>
+                  <button type="submit" class="btn btn-primary"><i data-lucide="save"></i> <span data-i18n="profile_save">Save Profile Changes</span></button>
+                </div>
+              </form>
+            </div>
+
+            <!-- SECTION 2: APPEARANCE -->
+            <div class="settings-pane" id="settings-pane-appearance">
+              <div class="pane-header">
+                <h3>Appearance & Visual Theme</h3>
+                <p class="text-secondary">Customize visual interface modes, accent color themes, and font scale</p>
+              </div>
+
+              <div class="settings-card glass-panel mb-4">
+                <h4 class="card-section-title"><i data-lucide="sun-moon" class="title-icon"></i> Display Mode</h4>
+                <div class="theme-mode-row">
+                  <div class="theme-mode-card active" id="theme-dark-btn">
+                    <div class="theme-preview dark-preview"></div>
+                    <span>Dark Mode (Recommended)</span>
+                  </div>
+                  <div class="theme-mode-card" id="theme-light-btn">
+                    <div class="theme-preview light-preview"></div>
+                    <span>Light Mode</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="settings-card glass-panel mb-4">
+                <h4 class="card-section-title"><i data-lucide="pipette" class="title-icon"></i> Accent Color Palette</h4>
+                <div class="color-palette-grid" id="theme-color-picker">
+                  <button type="button" class="color-pill active" data-theme="indigo"><span class="swatch swatch-indigo"></span> PrepSmart Indigo</button>
+                  <button type="button" class="color-pill" data-theme="emerald"><span class="swatch swatch-emerald"></span> Cyber Emerald</button>
+                  <button type="button" class="color-pill" data-theme="purple"><span class="swatch swatch-purple"></span> Neon Purple</button>
+                  <button type="button" class="color-pill" data-theme="amber"><span class="swatch swatch-amber"></span> Sunset Amber</button>
+                  <button type="button" class="color-pill" data-theme="cyan"><span class="swatch swatch-cyan"></span> Sapphire Cyan</button>
+                </div>
+              </div>
+
+              <div class="settings-card glass-panel mb-4">
+                <h4 class="card-section-title"><i data-lucide="type" class="title-icon"></i> Font Size & Spacing Layout</h4>
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label for="setting-font-size">Font Size Scale</label>
+                    <select id="setting-font-size" class="select-input">
+                      <option value="14px">Small (14px)</option>
+                      <option value="15px" selected>Medium (15px Default)</option>
+                      <option value="16px">Large (16px)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="setting-layout-spacing">Layout Spacing</label>
+                    <select id="setting-layout-spacing" class="select-input">
+                      <option value="comfortable" selected>Comfortable (Balanced)</option>
+                      <option value="compact">Compact (High Density)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 3: NOTIFICATIONS -->
+            <div class="settings-pane" id="settings-pane-notifications">
+              <div class="pane-header">
+                <h3>Notification Preferences</h3>
+                <p class="text-secondary">Control system reminders, interview schedules, and email alerts</p>
+              </div>
+
+              <div class="settings-card glass-panel mb-4">
+                <div class="toggle-setting-row">
+                  <div class="toggle-meta">
+                    <span class="toggle-title">Practice Reminders</span>
+                    <span class="toggle-desc text-secondary">Receive daily notifications to stay consistent with aptitude & coding practice</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="notif-practice" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-setting-row">
+                  <div class="toggle-meta">
+                    <span class="toggle-title">Interview Reminders</span>
+                    <span class="toggle-desc text-secondary">Alerts for upcoming scheduled AI Mock Interviews and practice sessions</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="notif-interviews" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-setting-row">
+                  <div class="toggle-meta">
+                    <span class="toggle-title">Progress Updates</span>
+                    <span class="toggle-desc text-secondary">Weekly performance digest report of readiness score changes</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="notif-progress" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-setting-row">
+                  <div class="toggle-meta">
+                    <span class="toggle-title">Email Notifications</span>
+                    <span class="toggle-desc text-secondary">Receive technical interview tips, new features, and account updates via email</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="notif-email">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 4: ACCOUNT & SECURITY -->
+            <div class="settings-pane" id="settings-pane-security">
+              <div class="pane-header">
+                <h3>Account & Security</h3>
+                <p class="text-secondary">Manage password credentials, active sessions, and account protection</p>
+              </div>
+
+              <div class="settings-card glass-panel mb-4">
+                <h4 class="card-section-title"><i data-lucide="key" class="title-icon"></i> Change Password</h4>
+                <form id="form-change-password">
+                  <div class="form-group mb-3">
+                    <label for="sec-current-pass">Current Password</label>
+                    <input type="password" id="sec-current-pass" class="select-input" placeholder="••••••••">
+                  </div>
+                  <div class="form-grid-2 mb-3">
+                    <div class="form-group">
+                      <label for="sec-new-pass">New Password</label>
+                      <input type="password" id="sec-new-pass" class="select-input" placeholder="••••••••">
+                    </div>
+                    <div class="form-group">
+                      <label for="sec-confirm-pass">Confirm New Password</label>
+                      <input type="password" id="sec-confirm-pass" class="select-input" placeholder="••••••••">
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-secondary btn-sm"><i data-lucide="lock"></i> <span>Update Password</span></button>
+                </form>
+              </div>
+
+              <div class="settings-card glass-panel mb-4">
+                <h4 class="card-section-title"><i data-lucide="laptop" class="title-icon"></i> Active Login Sessions</h4>
+                <div class="session-item">
+                  <div class="session-icon"><i data-lucide="monitor"></i></div>
+                  <div class="session-info">
+                    <span class="session-device">Windows PC • Chrome Browser</span>
+                    <span class="session-meta text-muted">Current Active Session • IP: 127.0.0.1</span>
+                  </div>
+                  <span class="badge badge-success">Active Now</span>
+                </div>
+              </div>
+
+              <div class="settings-card glass-panel">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5 class="text-danger mb-1"><i data-lucide="log-out"></i> Logout From All Devices</h5>
+                    <p class="text-secondary text-sm">Terminate active sessions across all mobile and desktop web browsers</p>
+                  </div>
+                  <button type="button" class="btn btn-outline-danger btn-sm" id="btn-logout-all-devices">Logout All Devices</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 5: PRIVACY -->
+            <div class="settings-pane" id="settings-pane-privacy">
+              <div class="pane-header">
+                <h3>Privacy Preferences</h3>
+                <p class="text-secondary">Control data visibility, resume storage encryption, and benchmark sharing</p>
+              </div>
+
+              <div class="settings-card glass-panel mb-4">
+                <div class="form-group mb-4">
+                  <label for="priv-profile-vis">Profile Visibility</label>
+                  <select id="priv-profile-vis" class="select-input">
+                    <option value="public">Public (Visible on benchmark leaderboards)</option>
+                    <option value="platform" selected>Platform Only (Registered users)</option>
+                    <option value="private">Private (Only me)</option>
+                  </select>
+                </div>
+
+                <div class="toggle-setting-row">
+                  <div class="toggle-meta">
+                    <span class="toggle-title">Resume Privacy Protection</span>
+                    <span class="toggle-desc text-secondary">Encrypt parsed resume data and store skills anonymously</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="priv-resume" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-setting-row">
+                  <div class="toggle-meta">
+                    <span class="toggle-title">Anonymous Benchmark Contribution</span>
+                    <span class="toggle-desc text-secondary">Allow aggregate assessment scores to improve target role benchmark ratings</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="priv-benchmarks" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 6: LANGUAGE -->
+            <div class="settings-pane" id="settings-pane-language">
+              <div class="pane-header">
+                <h3 data-i18n="lang_title">Language &amp; Localization</h3>
+                <p class="text-secondary" data-i18n="lang_subtitle">Select your preferred system display language</p>
+              </div>
+
+              <div class="settings-card glass-panel mb-4">
+                <div class="language-grid">
+                  <label class="language-option active">
+                    <input type="radio" name="sys-lang" value="en" checked>
+                    <span class="lang-flag">🇺🇸</span>
+                    <div class="lang-info"><span class="lang-name">English</span><span class="lang-native">Default</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="ta">
+                    <span class="lang-flag">🇮🇳</span>
+                    <div class="lang-info"><span class="lang-name">Tamil</span><span class="lang-native">தமிழ்</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="hi">
+                    <span class="lang-flag">🇮🇳</span>
+                    <div class="lang-info"><span class="lang-name">Hindi</span><span class="lang-native">हिंदी</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="te">
+                    <span class="lang-flag">🇮🇳</span>
+                    <div class="lang-info"><span class="lang-name">Telugu</span><span class="lang-native">తెలుగు</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="ml">
+                    <span class="lang-flag">🇮🇳</span>
+                    <div class="lang-info"><span class="lang-name">Malayalam</span><span class="lang-native">മലയാളം</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="kn">
+                    <span class="lang-flag">🇮🇳</span>
+                    <div class="lang-info"><span class="lang-name">Kannada</span><span class="lang-native">ಕನ್ನಡ</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="bn">
+                    <span class="lang-flag">🇧🇩</span>
+                    <div class="lang-info"><span class="lang-name">Bengali</span><span class="lang-native">বাংলা</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="mr">
+                    <span class="lang-flag">🇮🇳</span>
+                    <div class="lang-info"><span class="lang-name">Marathi</span><span class="lang-native">मराठी</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="es">
+                    <span class="lang-flag">🇪🇸</span>
+                    <div class="lang-info"><span class="lang-name">Español</span><span class="lang-native">Spanish</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="fr">
+                    <span class="lang-flag">🇫🇷</span>
+                    <div class="lang-info"><span class="lang-name">Français</span><span class="lang-native">French</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="de">
+                    <span class="lang-flag">🇩🇪</span>
+                    <div class="lang-info"><span class="lang-name">Deutsch</span><span class="lang-native">German</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="ja">
+                    <span class="lang-flag">🇯🇵</span>
+                    <div class="lang-info"><span class="lang-name">日本語</span><span class="lang-native">Japanese</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="zh">
+                    <span class="lang-flag">🇨🇳</span>
+                    <div class="lang-info"><span class="lang-name">中文</span><span class="lang-native">Chinese (Simplified)</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="ar">
+                    <span class="lang-flag">🇸🇦</span>
+                    <div class="lang-info"><span class="lang-name">العربية</span><span class="lang-native">Arabic</span></div>
+                  </label>
+                  <label class="language-option">
+                    <input type="radio" name="sys-lang" value="pt">
+                    <span class="lang-flag">🇧🇷</span>
+                    <div class="lang-info"><span class="lang-name">Português</span><span class="lang-native">Portuguese</span></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 7: PREFERENCES -->
+            <div class="settings-pane" id="settings-pane-preferences">
+              <div class="pane-header">
+                <h3>Learning Preferences</h3>
+                <p class="text-secondary">Configure default difficulty levels, preferred programming language, and daily targets</p>
+              </div>
+
+              <div class="settings-card glass-panel mb-4">
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label for="pref-default-diff">Default Question Difficulty</label>
+                    <select id="pref-default-diff" class="select-input">
+                      <option value="All Difficulties">All Difficulties (Adaptive)</option>
+                      <option value="Easy">Easy</option>
+                      <option value="Medium" selected>Medium</option>
+                      <option value="Hard">Hard</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="pref-prog-lang">Preferred Programming Language</label>
+                    <select id="pref-prog-lang" class="select-input">
+                      <option value="Python" selected>Python 3.10</option>
+                      <option value="JavaScript">JavaScript (Node.js)</option>
+                      <option value="Java">Java 17</option>
+                      <option value="C">C Language</option>
+                      <option value="SQL">SQL</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="pref-daily-goal">Daily Practice Goal</label>
+                    <select id="pref-daily-goal" class="select-input">
+                      <option value="15">15 Minutes / Day (Casual)</option>
+                      <option value="30" selected>30 Minutes / Day (Regular)</option>
+                      <option value="45">45 Minutes / Day (Intensive)</option>
+                      <option value="60">60 Minutes / Day (Interview Sprint)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 8: ACCESSIBILITY -->
+            <div class="settings-pane" id="settings-pane-accessibility">
+              <div class="pane-header">
+                <h3>Accessibility Settings</h3>
+                <p class="text-secondary">Improve readability, visual contrast, and reduce motion effects</p>
+              </div>
+
+              <div class="settings-card glass-panel mb-4">
+                <div class="toggle-setting-row">
+                  <div class="toggle-meta">
+                    <span class="toggle-title">High Contrast Mode</span>
+                    <span class="toggle-desc text-secondary">Enhance color contrast for better legibility</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="access-contrast">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-setting-row">
+                  <div class="toggle-meta">
+                    <span class="toggle-title">Larger Text Scale</span>
+                    <span class="toggle-desc text-secondary">Scale text sizes across code editors and quiz interfaces</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="access-large-text">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-setting-row">
+                  <div class="toggle-meta">
+                    <span class="toggle-title">Reduced Animations</span>
+                    <span class="toggle-desc text-secondary">Disable UI transitions and background motion graphics</span>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="access-motion">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 9: HELP & SUPPORT -->
+            <div class="settings-pane" id="settings-pane-help">
+              <div class="pane-header">
+                <h3>Help & Support Center</h3>
+                <p class="text-secondary">Find answers, report issues, or connect with our support team</p>
+              </div>
+
+              <div class="settings-card glass-panel mb-4">
+                <h4 class="card-section-title"><i data-lucide="help-circle" class="title-icon"></i> Frequently Asked Questions</h4>
+                <div class="faq-list">
+                  <div class="faq-item">
+                    <button type="button" class="faq-question">
+                      <span>How is my Interview Readiness Score calculated?</span>
+                      <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                      <p>Your overall readiness score is a weighted average calculated across 5 core modules: Aptitude Practice (20%), Coding Sandbox (25%), Technical Quizzes (25%), AI Mock Interviews (20%), and Resume Skill Match (10%).</p>
+                    </div>
+                  </div>
+
+                  <div class="faq-item">
+                    <button type="button" class="faq-question">
+                      <span>Can I retake AI Mock Interviews?</span>
+                      <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                      <p>Yes! You can launch unlimited AI Mock Interview sessions with different roles, technical domain types, and difficulty settings. All past responses are evaluated by AI in real-time.</p>
+                    </div>
+                  </div>
+
+                  <div class="faq-item">
+                    <button type="button" class="faq-question">
+                      <span>How does the Resume Analyzer extract skills?</span>
+                      <i data-lucide="chevron-down" class="faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                      <p>The analyzer parses PDF/DOCX resumes, matches extracted technical skills against target role benchmarks, and syncs identified competencies with your Unified Skill Profile matrix.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="settings-card glass-panel">
+                <h4 class="card-section-title"><i data-lucide="message-square" class="title-icon"></i> Report a Problem / Contact Support</h4>
+                <form id="form-support-ticket">
+                  <div class="form-group mb-3">
+                    <label for="supp-subject">Subject</label>
+                    <input type="text" id="supp-subject" class="select-input" placeholder="Describe the issue or question..." required>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="supp-message">Message Details</label>
+                    <textarea id="supp-message" class="code-textarea" rows="3" placeholder="Provide additional details..." required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-sm"><i data-lucide="send"></i> <span>Submit Support Ticket</span></button>
+                </form>
+              </div>
+            </div>
+
+            <!-- SECTION 10: ABOUT -->
+            <div class="settings-pane" id="settings-pane-about">
+              <div class="pane-header">
+                <h3>About PrepSmart</h3>
+                <p class="text-secondary">Smart Interview Preparation System details and legal documentation</p>
+              </div>
+
+              <div class="settings-card glass-panel mb-4 text-center py-4">
+                <div class="brand-icon mx-auto mb-2" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                  <i data-lucide="brain-circuit"></i>
+                </div>
+                <h3 class="gradient-text mb-1">PrepSmart System</h3>
+                <p class="text-secondary text-sm mb-3">Version 2.4.0 (Build 2026.09.27)</p>
+                <div class="badge badge-accent">Production Release</div>
+              </div>
+
+              <div class="settings-card glass-panel">
+                <div class="form-grid-2">
+                  <div class="info-link-box">
+                    <i data-lucide="file-text" class="icon-accent"></i>
+                    <div>
+                      <span class="font-weight-bold">Terms of Service</span>
+                      <p class="text-muted text-xs">Read user agreements & policies</p>
+                    </div>
+                  </div>
+                  <div class="info-link-box">
+                    <i data-lucide="shield" class="icon-accent"></i>
+                    <div>
+                      <span class="font-weight-bold">Privacy Policy</span>
+                      <p class="text-muted text-xs">Learn how your data is protected</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </main>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ==================== MODAL: ADD QUESTION (ADMIN) ==================== -->
+    <div class="modal-overlay hidden" id="modal-admin-question">
+      <div class="modal-card glass-panel" style="max-width: 650px;">
+        <div class="modal-header">
+          <h3 id="admin-modal-q-title">Add New Question</h3>
+          <button class="btn-close" id="btn-close-q-modal"><i data-lucide="x"></i></button>
+        </div>
+        <form id="form-admin-add-question" class="modal-body">
+          <div class="form-group">
+            <label for="admin-q-module-select">Target Module</label>
+            <select id="admin-q-module-select" class="select-input">
+              <option value="aptitude">Aptitude Practice</option>
+              <option value="coding">Coding Sandbox Problem</option>
+              <option value="technical">Technical Interview</option>
+            </select>
+          </div>
+
+          <!-- APTITUDE / TECHNICAL FIELDS -->
+          <div id="admin-q-fields-mcq">
+            <div class="form-group">
+              <label for="admin-mcq-question">Question Prompt</label>
+              <textarea id="admin-mcq-question" class="code-textarea" style="min-height: 70px;" placeholder="Enter question text..."></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="admin-mcq-a">Option A</label>
+                <input type="text" id="admin-mcq-a" placeholder="Option A text">
+              </div>
+              <div class="form-group">
+                <label for="admin-mcq-b">Option B</label>
+                <input type="text" id="admin-mcq-b" placeholder="Option B text">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="admin-mcq-c">Option C</label>
+                <input type="text" id="admin-mcq-c" placeholder="Option C text">
+              </div>
+              <div class="form-group">
+                <label for="admin-mcq-d">Option D</label>
+                <input type="text" id="admin-mcq-d" placeholder="Option D text">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="admin-mcq-correct">Correct Answer</label>
+                <select id="admin-mcq-correct" class="select-input">
+                  <option value="option_a">Option A</option>
+                  <option value="option_b">Option B</option>
+                  <option value="option_c">Option C</option>
+                  <option value="option_d">Option D</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="admin-mcq-category">Category</label>
+                <input type="text" id="admin-mcq-category" placeholder="e.g. Quantitative Aptitude or Python">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="admin-mcq-difficulty">Difficulty</label>
+                <select id="admin-mcq-difficulty" class="select-input">
+                  <option value="Easy">Easy</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-mcq-explanation">Explanation</label>
+              <textarea id="admin-mcq-explanation" class="code-textarea" style="min-height: 60px;" placeholder="Detailed solution explanation..."></textarea>
+            </div>
+          </div>
+
+          <!-- CODING FIELDS -->
+          <div id="admin-q-fields-coding" class="hidden">
+            <div class="form-group">
+              <label for="admin-code-title">Problem Title</label>
+              <input type="text" id="admin-code-title" placeholder="e.g. Reverse a String">
+            </div>
+
+            <div class="form-group">
+              <label for="admin-code-desc">Problem Description</label>
+              <textarea id="admin-code-desc" class="code-textarea" style="min-height: 70px;" placeholder="Write problem description and requirements..."></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="admin-code-category">Category</label>
+                <input type="text" id="admin-code-category" placeholder="e.g. Strings or Algorithms">
+              </div>
+              <div class="form-group">
+                <label for="admin-code-difficulty">Difficulty</label>
+                <select id="admin-code-difficulty" class="select-input">
+                  <option value="Easy">Easy</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Hard">Hard</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="admin-code-ex-in">Example Input</label>
+                <input type="text" id="admin-code-ex-in" placeholder='"hello"'>
+              </div>
+              <div class="form-group">
+                <label for="admin-code-ex-out">Example Output</label>
+                <input type="text" id="admin-code-ex-out" placeholder='"olleh"'>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-code-starter">Starter Code Template</label>
+              <textarea id="admin-code-starter" class="code-textarea" style="min-height: 70px;" placeholder="def solution(s):&#10;    pass"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="admin-code-testcases">Test Cases (JSON array)</label>
+              <textarea id="admin-code-testcases" class="code-textarea" style="min-height: 70px;" placeholder='[{"input": "hello", "expected_output": "olleh"}]'></textarea>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline" id="btn-cancel-q-modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create Question</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <!-- ==================== MODAL: USER PROGRESS DETAILS (ADMIN) ==================== -->
+    <div class="modal-overlay hidden" id="modal-admin-user-progress">
+      <div class="modal-card glass-panel" style="max-width: 700px;">
+        <div class="modal-header">
+          <h3 id="admin-modal-user-title">User Progress Breakdown</h3>
+          <button class="btn-close" id="btn-close-user-progress-modal"><i data-lucide="x"></i></button>
+        </div>
+        <div class="modal-body" id="admin-user-progress-body">
+          <p class="text-muted">Loading user progress details...</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btn-close-user-progress">Close</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Toast Notification Popup -->
+    <div id="toast-container" class="toast-container"></div>
+
+  </div>
+
+  <!-- Application Script -->
+  <script src="/js/i18n.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
+
